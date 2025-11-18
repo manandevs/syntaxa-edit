@@ -1,0 +1,1877 @@
+
+=== D:\syntaxa-edit\app\(features)\(routes)\services\markdown-editor\page.tsx ===
+import React from 'react'
+
+const page = () => {
+  return (
+    <div>page</div>
+  )
+}
+
+export default page
+
+=== D:\syntaxa-edit\app\(features)\(routes)\services\online-code-editor\page.tsx ===
+import React from 'react'
+
+export default function OnlineCodeEditorPage() {
+    return (
+        <section className="relative w-full h-auto flex items-center bg-white pt-[70px] md:pt-[98px] min-h-screen">
+            <div className="w-full z-10"></div>
+        </section>
+    )
+}
+
+
+=== D:\syntaxa-edit\app\(features)\(routes)\services\online-code-editor\[slug]\page.tsx ===
+import AdBanner from '@/components/online-code-editor/AdBanner'
+import Editor from '@/components/online-code-editor/Editor'
+import Sidebar from '@/components/online-code-editor/Sidebar'
+import React from 'react'
+
+const page = () => {
+    return (
+        <section className="relative w-full h-auto flex items-center bg-white pt-[70px] md:pt-[98px]">
+            <div className="w-full z-10">
+                <div className="flex flex-col h-screen font-sans">
+                    <div className="flex flex-1 overflow-hidden">
+                        <Sidebar />
+                        <main className="flex-1 p-4 grid grid-cols-1 lg:grid-cols-[1fr_auto] gap-4 overflow-auto">
+                            <div className="flex flex-col min-h-[600px]">
+                                <Editor />
+
+                                {/* Output Panel Placeholder */}
+                                <div className="mt-4 bg-white rounded-lg shadow-sm border border-gray-200">
+                                    <div className="p-2 border-b flex justify-between items-center bg-gray-50">
+                                        <h2 className="font-semibold text-sm">Output</h2>
+                                        <button className="text-sm text-gray-600 hover:text-gray-800 px-3 py-1 border rounded-md">
+                                            Clear
+                                        </button>
+                                    </div>
+                                    <div className="p-4 font-mono text-sm text-gray-500 h-32">
+                                        {/* Output content will go here */}
+                                    </div>
+                                </div>
+                            </div>
+                            <AdBanner />
+                        </main>
+                    </div>
+                </div>
+            </div>
+        </section>
+    )
+}
+
+export default page
+
+=== D:\syntaxa-edit\app\(features)\layout.tsx ===
+import React from 'react'
+
+interface FeatureLayoutProps {
+    children: React.ReactNode;
+}
+
+const FeatureLayout: React.FC<FeatureLayoutProps> = ({ children }) => {
+    return (
+        <div>{children}</div>
+    )
+}
+
+export default FeatureLayout;
+
+=== D:\syntaxa-edit\app\(site)\(routes)\page.tsx ===
+import FeaturesShowcase from "@/components/home/FeaturesShowcase";
+import FinalCTA from "@/components/home/FinalCTA";
+import Hero from "@/components/home/Hero";
+import { PricingTeaser } from "@/components/home/PricingTeaser";
+import SocialProof from "@/components/home/SocialProof";
+import React from "react";
+
+export default function Home() {
+  return (
+    <React.Fragment>
+      <div className="max-w-[100vw] h-auto overflow-hidden">
+        <Hero />
+        <FeaturesShowcase />
+        <SocialProof />
+        <PricingTeaser />
+        <FinalCTA />
+      </div>
+    </React.Fragment>
+  )
+}
+
+
+=== D:\syntaxa-edit\app\(site)\layout.tsx ===
+import React from 'react'
+
+interface SiteLayoutProps {
+    children: React.ReactNode;
+}
+
+const SiteLayout: React.FC<SiteLayoutProps> = ({ children }) => {
+    return (
+        <div>{children}</div>
+    )
+}
+
+export default SiteLayout
+
+=== D:\syntaxa-edit\app\globals.css ===
+@import "tailwindcss";
+
+:root {
+  --background: #ffffff;
+  --foreground: #171717;
+  --font-peachi: 'Peachi';
+  --font-poppins: 'Poppins';
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-poppins: var(--font-poppins);
+  --font-peachi: var(--font-peachi);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0a0a0a;
+    --foreground: #ededed;
+  }
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: 'Peachi', Arial, Helvetica, sans-serif;
+}
+
+@font-face {
+  font-family: 'Peachi';
+  src: url("/fonts/peachi.otf") format("opentype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+=== D:\syntaxa-edit\app\layout.tsx ===
+import type { Metadata } from "next";
+import { Poppins } from "next/font/google";
+
+import "./globals.css";
+import { cn } from "@/lib/utils";
+import Navbar from "@/components/layouts/Navbar";
+import Footer from "@/components/layouts/Footer";
+
+const poppins = Poppins({
+  weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
+  variable: "--font-poppins",
+  subsets: ["latin"],
+});
+
+export const metadata: Metadata = {
+  title: "Create Next App",
+  description: "Generated by create next app",
+};
+
+export default function RootLayout({ children }: { children: React.ReactNode }) {
+  return (
+    <html lang="en">
+      <body className={cn("antialiased", poppins.variable)}>
+        <Navbar />
+        {children}
+        <Footer />
+      </body>
+    </html>
+  );
+}
+
+
+=== D:\syntaxa-edit\components\home\AnimatedEditorMockup.tsx ===
+"use client";
+
+import { useState, useEffect, useRef } from "react";
+import { FiZap, FiAlertCircle } from "react-icons/fi";
+import { SiReact, SiTailwindcss, SiExpress, SiGraphql, SiPrisma } from "react-icons/si";
+import { FaNode, FaNodeJs } from "react-icons/fa";
+import { TbBrandTypescript } from "react-icons/tb";
+import { RiNextjsFill } from "react-icons/ri";
+import Text from "../shared/Text";
+
+const languages = [
+  { icon: FaNodeJs, label: "JS", color: "text-yellow-400" },
+  { icon: TbBrandTypescript, label: "TS", color: "text-blue-500" },
+  { icon: SiReact, label: "React", color: "text-blue-400" },
+  { icon: RiNextjsFill, label: "Next.js", color: "text-gray-800" },
+  { icon: SiTailwindcss, label: "Tailwind", color: "text-teal-400" },
+  { icon: FaNode, label: "Node.js", color: "text-green-600" },
+  { icon: SiExpress, label: "Express", color: "text-gray-700" },
+  { icon: SiGraphql, label: "GraphQL", color: "text-pink-500" },
+  { icon: SiPrisma, label: "Prisma", color: "text-blue-500" },
+];
+
+const codeLines = [
+  'const Welcome = () => {',
+  '  return <h1 className="title">Hello, World!</h1>;',
+  '};'
+];
+
+const codeWithError = '  return <h1 class="title">Hello, World!</h1>;';
+const correctCode = '  return <h1 className="title">Hello, World!</h1>;';
+
+const AnimatedEditorMockup = () => {
+  const [theme, setTheme] = useState<'dark' | 'light'>('dark');
+  const [currentCode, setCurrentCode] = useState<string[]>(['']);
+  const [showAutocomplete, setShowAutocomplete] = useState(false);
+  const [showError, setShowError] = useState(false);
+  const timeoutsRef = useRef<NodeJS.Timeout[]>([]);
+
+  useEffect(() => {
+    const typeLine = (lineIndex = 0, charIndex = 0) => {
+      if (lineIndex >= codeLines.length) {
+        timeoutsRef.current.push(
+          setTimeout(() => {
+            setTheme(t => (t === 'dark' ? 'light' : 'dark'));
+            setCurrentCode(['']);
+            setShowError(false);
+            typeLine(0);
+          }, 2500)
+        );
+        return;
+      }
+
+      const targetLine = lineIndex === 1 && showError ? codeWithError : codeLines[lineIndex];
+
+      if (charIndex < targetLine.length) {
+        setCurrentCode(prev => {
+          const n = [...prev];
+          n[lineIndex] = targetLine.substring(0, charIndex + 1);
+          if (!n[lineIndex + 1]) n[lineIndex + 1] = '';
+          return n;
+        });
+
+        if (lineIndex === 1 && charIndex === 21) {
+          setShowAutocomplete(true);
+          timeoutsRef.current.push(setTimeout(() => setShowAutocomplete(false), 1000));
+        }
+
+        timeoutsRef.current.push(setTimeout(() => typeLine(lineIndex, charIndex + 1), 50));
+      } else {
+        if (lineIndex === 1 && !showError) {
+          timeoutsRef.current.push(
+            setTimeout(() => {
+              setShowError(true);
+              setCurrentCode(prev => {
+                const n = [...prev];
+                n[1] = codeWithError;
+                return n;
+              });
+
+              timeoutsRef.current.push(
+                setTimeout(() => {
+                  setShowError(false);
+                  setCurrentCode(prev => {
+                    const n = [...prev];
+                    n[1] = correctCode;
+                    return n;
+                  });
+                  typeLine(lineIndex + 1);
+                }, 1500)
+              );
+            }, 1000)
+          );
+        } else typeLine(lineIndex + 1);
+      }
+    };
+
+    typeLine();
+
+    return () => {
+      timeoutsRef.current.forEach(clearTimeout);
+      timeoutsRef.current = [];
+    };
+  }, [showError]);
+
+  const themeClasses =
+    theme === 'dark'
+      ? 'bg-[#1e293b] border-gray-700 text-gray-300'
+      : 'bg-white border-gray-200 text-gray-800';
+
+  const syntaxHighlight = (line: string) =>
+    line
+      .replace(/(const|return)/g, '<span class="text-purple-400">$1</span>')
+      .replace(/(Welcome)/g, '<span class="text-yellow-300">$1</span>')
+      .replace(/(<h1|<\/h1>)/g, '<span class="text-red-400">$1</span>')
+      .replace(/(className|class)/g, '<span class="text-cyan-300">$1</span>')
+      .replace(/("title"|"Hello, World!")/g, '<span class="text-green-400">$1</span>');
+
+  const dots = ['.', '..', '...'];
+
+  return (
+    <div className="w-full flex flex-col items-center gap-4">
+      {/* Editor Panel */}
+      <div
+        className={`relative w-full max-w-2xl rounded-xl shadow-2xl p-4 border transition-colors duration-500 ${themeClasses}`}
+      >
+        {/* Window Controls */}
+        <div className="flex items-center gap-2 mb-4">
+          {['red', 'yellow', 'green'].map((c, i) => (
+            <div key={i} className={`w-3.5 h-3.5 bg-${c}-500 rounded-full`}></div>
+          ))}
+        </div>
+
+        {/* Code Area */}
+        <div
+          className={`relative ${theme === 'dark' ? 'bg-gray-900/50' : 'bg-gray-100/50'} h-64 rounded-md p-4 text-sm font-mono overflow-hidden transition-colors duration-500`}
+        >
+          <pre>
+            {currentCode.map((line, i) => (
+              <div key={i} className="relative">
+                <span dangerouslySetInnerHTML={{ __html: syntaxHighlight(line) }} />
+                {i === 1 && showError && (
+                  <div className="absolute bottom-0 left-20 w-10 border-b-2 border-red-500 animate-pulse"></div>
+                )}
+              </div>
+            ))}
+          </pre>
+
+          {/* Autocomplete Popup */}
+          {showAutocomplete && (
+            <div
+              className={`absolute top-24 left-16 w-48 rounded-md shadow-lg p-2 border transition-colors duration-500 ${themeClasses}`}
+            >
+              <div className="flex items-center gap-2 p-2 bg-blue-500/10 rounded-md">
+                <FiZap className="text-blue-500" />
+                <span className="font-semibold text-blue-500">className</span>
+              </div>
+            </div>
+          )}
+        </div>
+
+        {/* Floating Error */}
+        {showError && (
+          <div
+            className={`absolute bottom-6 right-6 flex items-center gap-2 p-2 rounded-lg text-xs transition-colors duration-500 z-50 ${
+              theme === 'dark' ? 'bg-red-500/10 text-red-400' : 'bg-red-100 text-red-600'
+            }`}
+          >
+            <FiAlertCircle />
+            <span>Invalid prop `class`</span>
+          </div>
+        )}
+
+        {/* Floating Elements */}
+        <div className="absolute -top-3 -left-12 w-48 p-3 bg-white/50 backdrop-blur-md rounded-lg shadow-lg text-xs border border-gray-200 z-50">
+          <strong>Performance:</strong>
+          <div className="w-full bg-gray-200 h-2 rounded-full mt-1">
+            <div className="bg-green-500 h-2 rounded-full w-[95%]"></div>
+          </div>
+        </div>
+        <div className="absolute -bottom-8 -right-12 w-40 p-3 bg-white/50 backdrop-blur-md rounded-lg shadow-lg text-xs border border-gray-200 z-50">
+          <pre>&lt;Button primary /&gt;</pre>
+        </div>
+      </div>
+
+      {/* Language Icons Panel */}
+      <div className="w-full max-w-2xl grid grid-cols-5 gap-3 p-3 border rounded-lg bg-gray-50 justify-center">
+        {languages.map(({ icon: Icon, label, color }) => (
+          <div
+            key={label}
+            className="flex flex-col items-center justify-center w-full h-full p-1 aspect-square bg-white rounded-md shadow hover:scale-105 transition-transform truncate"
+          >
+            <Icon className={`${color} w-8 h-8`} />
+            <Text text={label} className="text-xs" />
+          </div>
+        ))}
+        <div className="flex justify-end text-end w-full h-full p-1 aspect-square bg-white rounded-md shadow hover:scale-105 transition-transform truncate">
+          {dots.map((d, i) => (
+            <p
+              key={i}
+              className={['text-md', 'text-2xl', 'text-5xl'][i] + ' mt-auto p-[1px]'}
+              style={{ WebkitTextStroke: '1px black' }}
+            >
+              {d}
+            </p>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default AnimatedEditorMockup;
+
+
+=== D:\syntaxa-edit\components\home\FeatureCard.tsx ===
+"use client";
+
+import { useRef, useEffect } from "react";
+import { FiArrowRight } from "react-icons/fi";
+import { gsap } from "gsap";
+import { cn } from "@/lib/utils";
+import Text from "../shared/Text";
+import Heading from "../shared/Heading";
+import Button from "../shared/Button";
+
+export type Feature = {
+  icon: React.ElementType;
+  title: string;
+  description: string;
+  gradient: string;
+  iconGradient: string;
+  hoverGlow: string;
+  extraContent?: React.ReactNode;
+};
+
+const FeatureCard = ({ feature }: { feature: Feature }) => {
+  const { icon: Icon, title, description, gradient, iconGradient, hoverGlow, extraContent } = feature;
+  const cardRef = useRef<HTMLDivElement>(null);
+  const iconRef = useRef<HTMLDivElement>(null);
+  const timeline = useRef<gsap.core.Timeline | null>(null);
+
+  useEffect(() => {
+    if (cardRef.current && iconRef.current) {
+      timeline.current = gsap.timeline({ paused: true })
+        .to(cardRef.current, { y: -8, duration: 0.3, ease: "power2.out" })
+        .to(iconRef.current, { rotate: -15, scale: 1.1, duration: 0.3, ease: "power2.out" }, "<");
+    }
+  }, []);
+
+  const handleMouseEnter = () => timeline.current?.play();
+  const handleMouseLeave = () => timeline.current?.reverse();
+
+  return (
+    <div
+      ref={cardRef}
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
+      className={cn(
+        "relative p-8 rounded-2xl overflow-hidden cursor-pointer shadow-md transition-shadow duration-300 transform hover:-translate-y-2 bg-gradient-to-br bg-[length:200%_200%] bg-left hover:bg-right",
+        gradient,
+        hoverGlow,
+        "hover:shadow-xl"
+      )}
+    >
+      {/* Icon */}
+      <div
+        ref={iconRef}
+        className={cn(
+          "w-16 h-16 rounded-xl flex items-center justify-center text-white text-3xl mb-6 shadow-lg transform transition-transform duration-300",
+          iconGradient
+        )}
+      >
+        <Icon />
+      </div>
+
+      {/* Extra Content Overlay */}
+      {extraContent && <div className="absolute top-4 right-4">{extraContent}</div>}
+
+      {/* Text Content */}
+      <Heading className="text-black" variant="small">{title}</Heading>
+      <Text className="mt-2 text-gray-600 leading-relaxed">{description}</Text>
+
+      {/* Learn More Link */}
+      <Button variant="ghost">
+        Learn More
+        <FiArrowRight className="transition-transform duration-300 group-hover:translate-x-1" />
+      </Button>
+      {/* <Link href="#" className="mt-6 inline-flex items-center gap-2 font-semibold text-gray-800 group">
+      </Link> */}
+    </div>
+  );
+};
+
+export default FeatureCard;
+
+
+=== D:\syntaxa-edit\components\home\FeaturesShowcase.tsx ===
+"use client";
+import FeatureCard, { type Feature } from "./FeatureCard";
+import { TbBolt, TbBrain, TbPalette, TbPuzzle, TbDevices, TbBug } from "react-icons/tb";
+import { FaWindows, FaApple, FaLinux } from "react-icons/fa";
+import Heading from "../shared/Heading";
+import Text from "../shared/Text";
+
+const featuresData: Feature[] = [
+  {
+    icon: TbBolt,
+    title: "Lightning Performance",
+    description: "Built from the ground up for speed, handling massive files and projects with ease.",
+    gradient: "from-blue-100 to-blue-200",
+    iconGradient: "bg-gradient-to-br from-blue-500 to-cyan-400",
+    hoverGlow: "hover:shadow-blue-500/30",
+    extraContent: (
+      <span className="px-2 py-1 text-xs font-bold text-blue-800 bg-white/70 rounded-full border border-blue-200">
+        2x faster than VS Code
+      </span>
+    ),
+  },
+  {
+    icon: TbBrain,
+    title: "AI-Powered Intelligence",
+    description: "Get context-aware suggestions and completions that feel like magic, not just keywords.",
+    gradient: "from-green-100 to-green-200",
+    iconGradient: "bg-gradient-to-br from-green-500 to-emerald-400",
+    hoverGlow: "hover:shadow-green-500/30",
+  },
+  {
+    icon: TbPalette,
+    title: "Beautiful Interface",
+    description: "A distraction-free UI that's fully customizable to create your perfect coding sanctuary.",
+    gradient: "from-purple-100 to-purple-200",
+    iconGradient: "bg-gradient-to-br from-purple-500 to-fuchsia-400",
+    hoverGlow: "hover:shadow-purple-500/30",
+  },
+  {
+    icon: TbPuzzle,
+    title: "Plugin Ecosystem",
+    description: "Extend functionality with a curated marketplace of stable, high-performance plugins.",
+    gradient: "from-orange-100 to-orange-200",
+    iconGradient: "bg-gradient-to-br from-orange-500 to-amber-400",
+    hoverGlow: "hover:shadow-orange-500/30",
+    extraContent: (
+      <span className="px-2 py-1 text-xs font-bold text-orange-800 bg-white/70 rounded-full border border-orange-200">
+        500+ plugins available
+      </span>
+    ),
+  },
+  {
+    icon: TbDevices,
+    title: "Cross-Platform",
+    description: "Your personalized setup, synced and ready to go on Windows, macOS, and Linux.",
+    gradient: "from-teal-100 to-teal-200",
+    iconGradient: "bg-gradient-to-br from-teal-500 to-cyan-400",
+    hoverGlow: "hover:shadow-teal-500/30",
+    extraContent: (
+      <div className="flex gap-2 text-teal-800 text-lg">
+        <FaWindows /> <FaApple /> <FaLinux />
+      </div>
+    ),
+  },
+  {
+    icon: TbBug,
+    title: "Smart Debugging",
+    description: "Find and crush bugs with an intuitive, multi-language debugger that just works.",
+    gradient: "from-red-100 to-red-200",
+    iconGradient: "bg-gradient-to-br from-red-500 to-rose-400",
+    hoverGlow: "hover:shadow-red-500/30",
+  },
+];
+
+const FeaturesShowcase = () => (
+  <section className="relative bg-white py-20 sm:py-28">
+     <div className="absolute bg-[#9CE015] size-[200px] lg:size-[320px] blur-[200px] md:blur-[300px] z-[1] top-0 md:top-[-100px] right-[-100px]"></div>
+        <div className="absolute bg-[#7558FC] size-[200px] lg:size-[320px] blur-[200px] md:blur-[300px] z-[1] bottom-[-150px] left-[-100px]"></div>
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="text-center">
+        <Heading className="text-black" variant="medium">
+          The Complete Developer Toolkit
+        </Heading>
+        <Text>
+          Everything you need to build, debug, and ship amazing software, all in one place.
+        </Text>
+      </div>
+      <div className="mt-16 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        {featuresData.map((feature) => (
+          <FeatureCard key={feature.title} feature={feature} />
+        ))}
+      </div>
+    </div>
+  </section>
+);
+
+export default FeaturesShowcase;
+
+=== D:\syntaxa-edit\components\home\FinalCTA.tsx ===
+import Heading from "../shared/Heading";
+import Text from "../shared/Text";
+import Button from "../shared/Button";
+
+const GeometricPattern = () => (
+  <div className="absolute inset-0 w-full h-full opacity-5" style={{ zIndex: 0 }}>
+    <svg width="100%" height="100%">
+      <defs>
+        <pattern id="pattern-squares" x="0" y="0" width="30" height="30" patternUnits="userSpaceOnUse">
+          <rect width="1" height="30" fill="white" />
+          <rect width="30" height="1" fill="white" />
+        </pattern>
+      </defs>
+      <rect x="0" y="0" width="100%" height="100%" fill="url(#pattern-squares)" />
+    </svg>
+  </div>
+);
+
+const FinalCTA = () => {
+  return (
+    <section className="relative w-full bg-[linear-gradient(135deg,#667eea_0%,#764ba2_100%)]">
+      <div className="bg-[#7558FC] size-[200px] lg:size-[320px] blur-[150px] md:blur-[250px] absolute top-0 left-0 opacity-50 z-0"></div>
+      <div className="bg-[#9CE015] size-[200px] lg:size-[320px] blur-[150px] md:blur-[250px] absolute bottom-0 right-0 opacity-50 z-0"></div>
+      <GeometricPattern />
+      <div className="absolute inset-0 bg-black/10" />
+      <div className="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col items-center justify-center min-h-[400px] py-20 text-center">
+        {/* Heading */}
+        <Heading
+          text="Ready to Transform Your Coding Experience?"
+          variant="medium"
+        />
+        <Text className="mt-4 text-white">
+          Join thousands of developers who&apos;ve already made the switch.
+        </Text>
+
+        {/* Buttons */}
+        <div className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-6">
+          <Button> Code Clips Free </Button>
+          <Button variant="outline" className="text-white"> Watch Demo </Button>
+        </div>
+
+        {/* Micro Copy */}
+        <Text className="mt-6 text-base text-white">
+          No credit card required • 14-day pro trial
+        </Text>
+      </div>
+    </section>
+  );
+};
+
+export default FinalCTA;
+
+
+=== D:\syntaxa-edit\components\home\Hero.tsx ===
+import { FiUsers } from "react-icons/fi";
+import AnimatedEditorMockup from "./AnimatedEditorMockup";
+import Badge from "../shared/Badge";
+import Heading from "../shared/Heading";
+import Text from "../shared/Text";
+import Button from "../shared/Button";
+import { BiExpandHorizontal } from "react-icons/bi";
+import { AiOutlinePlayCircle } from "react-icons/ai";
+
+const Hero = () => {
+  return (
+    <section className="relative w-full h-auto flex items-center bg-white pt-[70px] md:pt-[98px]">
+      <div className="max-w-7xl mx-auto px-5 py-[50px] w-full z-10">
+        <div className="grid grid-cols-1 xl:grid-cols-5 gap-16 items-center">
+
+          {/* Left Side: Content */}
+          <div className="text-center lg:text-left col-span-3">
+            <Badge className="mx-auto lg:mx-0 lg:mr-auto">
+              <FiUsers />
+              Trusted by 50K+ developers
+            </Badge>
+            <Heading className="text-black">
+              CODE FASTER. DEBUG SMARTER. BUILD BETTER.
+            </Heading>
+            <Text>
+              The intelligent code editor that thinks like you do. Lightning-fast performance meets AI-powered development.
+            </Text>
+
+            <div className="mt-10 flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
+              <Button>
+                <BiExpandHorizontal className="mr-2 w-4 h-4" />
+                Free sinnepts
+              </Button>
+              <Button variant="outline">
+                <AiOutlinePlayCircle className="mr-2 w-4 h-4" />
+                Watch Demo
+              </Button>
+            </div>
+
+            <Text className="mt-8 flex items-center justify-center lg:justify-start gap-6 text-sm font-medium text-gray-500">
+              <span>✓ 2-second startup</span>
+              <span>✓ AI autocomplete</span>
+              <span>✓ Cross-platform</span>
+            </Text>
+          </div>
+
+          {/* Right Side: Animated Mockup with Floating Elements */}
+          
+          <div className="relative hidden lg:flex items-center justify-center col-span-2">
+            <AnimatedEditorMockup />
+          </div>
+
+        </div>
+      </div>
+      <div className="bg-[#7558FC] size-[200px] lg:size-[320px] blur-[200px] md:blur-[300px] z-[1] absolute top-0 md:top-[100px] left-[0]"></div>
+      <div className="bg-[#9CE015] size-[200px] lg:size-[320px] blur-[200px] md:blur-[300px] z-[1] absolute top-[330px] md:top-auto md:bottom-[100px] right-0"></div>
+    </section>
+  );
+};
+
+export default Hero;
+
+
+=== D:\syntaxa-edit\components\home\PricingTeaser.tsx ===
+"use client";
+
+import { useState } from 'react';
+import { FiCheck, FiInfo } from 'react-icons/fi';
+import { HiShieldCheck } from 'react-icons/hi2';
+import Heading from '../shared/Heading';
+import Text from '../shared/Text';
+import Button from '../shared/Button';
+
+const pricingData = [
+   {
+      title: 'Starter',
+      description: 'For students, hobbyists, and anyone getting started with coding.',
+      price: { annual: '0', monthly: '0' },
+      showDemoButton: false,
+      featuresTitle: 'Key features include',
+      features: ['Full Editor Functionality', 'Basic AI Autocomplete', 'Community Support', '5 Custom Themes', 'Personal Projects Only']
+   },
+   {
+      title: 'Pro',
+      description: 'For professional developers, freelancers, and small teams who need advanced tools.',
+      price: { annual: '9', monthly: '12' },
+      showDemoButton: true,
+      featuresTitle: 'Everything in Starter, plus',
+      features: ['Advanced AI Autocomplete', 'Cloud Sync for Settings', 'Unlimited Themes & Plugins', 'Priority Email Support', 'Commercial Use License']
+   },
+   {
+      title: 'Team',
+      description: 'For growing teams and businesses that need to collaborate securely and efficiently.',
+      price: { annual: '19', monthly: '24' },
+      showDemoButton: true,
+      featuresTitle: 'Everything in Pro, plus',
+      features: ['Real-time Collaboration', 'Team Management & Billing', 'Admin Controls & Permissions', 'SSO & Identity Management', 'Includes 5 Pro seats']
+   }
+];
+
+const enterpriseFeatures = [
+   'On-premise deployment options',
+   'Dedicated support manager & SLA',
+   'Custom security audits',
+   'Volume licensing discounts',
+   'Custom feature development'
+];
+
+export const PricingTeaser = () => {
+   const [isAnnual, setIsAnnual] = useState(true);
+
+   return (
+      <section className="bg-[#FDFCF9] relative">
+                  <div className="absolute bg-[#9CE015] size-[200px] lg:size-[320px] blur-[200px] md:blur-[300px] z-[1] bottom-[-150px] right-[-150px]"></div>
+         <div className="absolute bg-[#7558FC] size-[200px] lg:size-[320px] blur-[200px] md:blur-[300px] z-[1] top-[50px] left-[-150px]"></div>
+
+         <div className="mx-auto max-w-[1375px] px-6 py-20 sm:py-28 xl:px-8">
+
+            {/* Heading */}
+            <div className="mx-auto max-w-4xl text-center xl:text-left">
+               <Heading className='text-black' variant='medium'>
+                  Find the plan that fits your ambition.
+               </Heading>
+
+               <div className="flex items-center justify-center xl:justify-start gap-6">
+                  <span
+                     onClick={() => setIsAnnual(true)}
+                     className={`cursor-pointer text-base font-medium transition-colors ${isAnnual ? 'text-[#1F1F1F] underline decoration-2 underline-offset-[6px]' : 'text-[#A8A8A8]'}`}
+                  >
+                     Billed annually (Save 25%)
+                  </span>
+                  <span
+                     onClick={() => setIsAnnual(false)}
+                     className={`cursor-pointer text-base font-medium transition-colors ${!isAnnual ? 'text-[#1F1F1F] underline decoration-2 underline-offset-[6px]' : 'text-[#A8A8A8]'}`}
+                  >
+                     Billed monthly
+                  </span>
+               </div>
+            </div>
+
+            {/* Pricing Cards */}
+            <div className="mx-auto mt-12 flex max-w-4xl flex-col xl:max-w-none xl:flex-row xl:items-start xl:gap-6">
+               <div className="grid w-full grid-cols-1 gap-6 xl:grid-cols-3">
+
+                  {pricingData.map((card) => (
+                     <div key={card.title} className="flex w-full flex-col overflow-hidden rounded-xl border border-black/10 md:flex-row xl:flex-col">
+
+                        {/* Top */}
+                        <div className="flex flex-1 flex-col justify-between bg-white p-8 md:w-1/2 xl:w-full">
+                           <div>
+                              <Heading className='text-black' variant='small'>
+                                 {card.title}
+                              </Heading>
+
+                              <Text className="text-gray-600">
+                                 {card.description}
+                              </Text>
+                           </div>
+
+                           <div className="mt-8">
+                              <div className="flex items-start gap-1">
+                                 <Heading className='text-black' variant='medium'>
+                                    {isAnnual ? card.price.annual : card.price.monthly}
+                                 </Heading>
+
+                                 <Text className="pt-2 text-sm text-neutral-600">
+                                    {card.title !== 'Starter' && '/ seat/mo'}
+                                 </Text>
+                              </div>
+
+                              <Text className="text-sm text-neutral-600 h-4">
+                                 {card.title !== 'Starter' && isAnnual && 'billed annually'}
+                              </Text>
+
+                              <div className="mt-6 flex flex-col items-center gap-4">
+                                 <Button variant='black' className='text-nowrap'>
+                                    {card.title === 'Starter' ? 'Get Started' : 'Start 14-day trial'}
+                                 </Button>
+
+                                 {card.showDemoButton && (
+                                    <Button variant='ghost' className='text-nowrap'>
+                                       Book a Demo
+                                    </Button>
+                                 )}
+                              </div>
+                           </div>
+                        </div>
+
+                        {/* Bottom */}
+                        <div className="border-black/10 bg-[#FCFBF8] p-8 md:w-1/2 md:border-l xl:w-full xl:border-l-0 xl:border-t">
+                           <Text className="text-xs font-semibold uppercase tracking-wider text-neutral-800">
+                              {card.featuresTitle}
+                           </Text>
+
+                           <ul className="mt-4 flex flex-col gap-3">
+                              {card.features.map((feature) => (
+                                 <li key={feature} className="flex items-start gap-2">
+                                    <FiCheck className="mt-1 h-3.5 w-3.5 flex-shrink-0 text-[#17100E]" strokeWidth="3" />
+
+                                    <Text className="text-sm leading-snug text-neutral-600">
+                                       {feature}
+                                    </Text>
+                                 </li>
+                              ))}
+                           </ul>
+                        </div>
+                     </div>
+                  ))}
+               </div>
+
+               {/* Enterprise Card */}
+               <div className="mt-8 w-full xl:mt-0 xl:max-w-xs">
+                  <div className="flex h-full flex-col rounded-xl border border-black/10 bg-[#F4F3EC]">
+                     <div className="flex flex-1 flex-col justify-between p-8">
+
+                        <div>
+                           <Heading variant="small" className="mb-2 text-black">
+                              Enterprise
+                           </Heading>
+
+                           <Text className="text-sm leading-relaxed text-neutral-600">
+                              For large organizations with custom security, deployment, and support needs.
+                           </Text>
+                        </div>
+
+                        <div className="mt-8">
+                           <Text className="text-xl font-semibold text-black">
+                              Custom Pricing
+                           </Text>
+
+                           <div className="mt-6 flex h-9 items-center">
+                              <Button variant='outline' className='ml-4 text-nowrap'>
+                                 Contact Sales
+                              </Button>
+                           </div>
+
+                           <div className="mt-8 border-t border-black/10 pt-6">
+                              <Text className="text-xs font-semibold uppercase tracking-wider text-neutral-800">
+                                 Everything in Team, plus
+                              </Text>
+
+                              <ul className="mt-4 flex flex-col gap-3">
+                                 {enterpriseFeatures.map(feature => (
+                                    <li key={feature} className="flex items-start gap-2">
+                                       <FiCheck className="mt-1 h-3.5 w-3.5 flex-shrink-0 text-[#17100E]" strokeWidth="3" />
+                                       <Text className="text-sm leading-snug text-neutral-600">
+                                          {feature}
+                                       </Text>
+                                    </li>
+                                 ))}
+                              </ul>
+                           </div>
+                        </div>
+
+                     </div>
+                  </div>
+               </div>
+            </div>
+
+            {/* Guarantee Section */}
+            <div className="mx-auto mt-16 max-w-4xl text-center">
+
+               <button className="group inline-flex items-center gap-2">
+                  <HiShieldCheck className="h-6 w-6 text-[#17100E] transition-colors group-hover:text-blue-600" />
+
+                  <Text className="text-xl font-bold text-[#17100E] transition-colors group-hover:text-blue-600">
+                     30-Day Money-Back Guarantee
+                  </Text>
+
+                  <FiInfo className="h-4 w-4 text-neutral-400" />
+               </button>
+
+               <Text className="mt-4 text-center text-base leading-relaxed text-neutral-600">
+                  All plans include cross-platform support on macOS, Windows, and Linux, with regular updates and community access.
+               </Text>
+
+               <div className="mt-6 flex flex-row items-center justify-center gap-6">
+                  <div className="mt-6 flex flex-row items-center justify-center gap-6">
+                     <Button
+                        variant="ghost"
+                        className="font-semibold text-black underline underline-offset-4 hover:text-blue-600 shadow-none px-0 py-0"
+                     >
+                        View all features
+                     </Button>
+
+                     <Button
+                        variant="ghost"
+                        className="font-semibold text-black underline underline-offset-4 hover:text-blue-600 shadow-none px-0 py-0"
+                     >
+                        Compare plans
+                     </Button>
+                  </div>
+               </div>
+
+            </div>
+
+         </div>
+      </section>
+   );
+};
+
+
+=== D:\syntaxa-edit\components\home\SocialProof.tsx ===
+"use client";
+
+import { Swiper, SwiperSlide } from 'swiper/react';
+import 'swiper/css';
+import 'swiper/css/navigation';
+import { FaQuoteLeft } from 'react-icons/fa';
+import { GiRamProfile } from 'react-icons/gi';
+import { FiChevronLeft, FiChevronRight } from 'react-icons/fi';
+import { testimonials, companyLogos } from '@/contexts/Home';
+import Heading from '../shared/Heading';
+import Text from '../shared/Text';
+import { Navigation } from 'swiper/modules';
+
+const SocialProof = () => {
+  return (
+    <section className="bg-gray-50 py-20 sm:py-28">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="text-center">
+          <Heading className="text-black" variant="medium">
+            Loved By Developers Worldwide
+          </Heading>
+          <Text>
+            Don&apos;t just take our word for it. Here&apos;s what developers are saying.
+          </Text>
+        </div>
+
+        {/* Testimonial Carousel */}
+        <div className="mt-16 relative">
+          <Swiper
+            modules={[Navigation]}
+            loop={true}
+            spaceBetween={16}
+            slidesPerView={1}
+            breakpoints={{
+              640: { slidesPerView: 2 },
+              1024: { slidesPerView: 3 },
+            }}
+            navigation={{
+              prevEl: ".prev-btn",
+              nextEl: ".next-btn",
+            }}
+            className="overflow-visible"
+          >
+            {testimonials.map((testimonial, index) => (
+              <SwiperSlide key={index} className="flex-[0_0_auto]">
+                <div className="relative h-full bg-white p-8 rounded-2xl shadow-lg border border-gray-200/80 flex flex-col">
+                  <FaQuoteLeft className="absolute top-6 left-8 text-5xl text-gray-100 -z-0" />
+                  <p className="relative z-10 text-gray-700 italic flex-grow">
+                    &quot;{testimonial.quote}&quot;
+                  </p>
+                  <div className="mt-6 flex items-center gap-4 pt-6 border-t border-gray-200">
+                    <GiRamProfile className="w-16 h-16 rounded-full shadow-md" />
+                    <div>
+                      <p className="font-bold text-gray-900">{testimonial.author}</p>
+                      <p className="text-sm text-gray-500">{testimonial.title}</p>
+                    </div>
+                  </div>
+                </div>
+              </SwiperSlide>
+            ))}
+          </Swiper>
+
+          {/* Navigation Buttons */}
+          <div className="flex justify-end gap-4 mt-8">
+            <button
+              className="prev-btn w-12 h-12 rounded-full bg-white border border-gray-300 flex items-center justify-center text-gray-700 hover:bg-gray-100 transition-colors"
+              aria-label="Previous testimonial"
+            >
+              <FiChevronLeft size={24} />
+            </button>
+
+            <button
+              className="next-btn w-12 h-12 rounded-full bg-white border border-gray-300 flex items-center justify-center text-gray-700 hover:bg-gray-100 transition-colors"
+              aria-label="Next testimonial"
+            >
+              <FiChevronRight size={24} />
+            </button>
+          </div>
+        </div>
+
+        {/* Company Logos */}
+        <div className="mt-24 text-center">
+          <Text className="text-sm font-semibold text-gray-500 uppercase tracking-wider">
+            Trusted by high-performing teams at
+          </Text>
+          <div className="mt-6 flex justify-center items-center flex-wrap gap-x-12 gap-y-6">
+            {companyLogos.map(({ name, Icon }) => (
+              <Icon
+                key={name}
+                className="h-8 text-gray-400 grayscale hover:grayscale-0 hover:text-gray-600 transition-all"
+              />
+            ))}
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+};
+
+export default SocialProof;
+
+
+=== D:\syntaxa-edit\components\layouts\Footer.tsx ===
+import Link from "next/link";
+import { FaXTwitter, FaInstagram, FaLinkedin } from "react-icons/fa6";
+import Heading from "../shared/Heading";
+import Button from "../shared/Button";
+import Logo from "../shared/Logo";
+import { ReactNode } from "react";
+
+export default function Footer() {
+  const nav = ["Home", "Services", "Our Values", "Contact us"];
+
+  return (
+    <footer className="max-w-[1210px] w-full mx-auto px-5 py-12 pb-4">
+      <div className="flex flex-col lg:flex-row justify-between gap-10">
+        <div className="max-w-[551px] w-full">
+          <Logo />
+          <Heading
+            variant="medium"
+            text="Subscribe to our newsletter and get our weekly blogs"
+          />
+
+          <div className="flex items-end gap-4 mt-5">
+            <input
+              placeholder="Youremial@example.com"
+              className="w-full max-w-[278px] py-3 px-3.5 bg-white rounded-[16px] border border-[#3D3D3D1A] shadow-[0px_3px_0_#EEE] text-[16px] placeholder:text-[#929292] outline-none"
+            />
+            <Button text="Submit" />
+          </div>
+        </div>
+
+        <div className="grid grid-cols-2 gap-4 md:gap-6">
+          {nav.map((item, i) => (
+            <Link
+              key={i}
+              href="/"
+              className="text-[#535353] font-medium text-[18px] md:text-xl hover:text-black"
+            >
+              {item}
+            </Link>
+          ))}
+        </div>
+      </div>
+
+      <div className="py-14 flex flex-col md:flex-row justify-between items-center gap-5">
+        <p className="text-[14px] text-[#707070] font-semibold">
+          © 2025 Growth agency global ( GAG ) All rights reserved
+        </p>
+
+        <div className="flex gap-3">
+          <SocialIcon href="/" icon={<FaXTwitter />} />
+          <SocialIcon href="/" icon={<FaInstagram />} hoverColor="#E4405F" />
+          <SocialIcon href="/" icon={<FaLinkedin />} hoverColor="#0077B5" />
+        </div>
+      </div>
+    </footer>
+  );
+}
+
+/* ------------------ */
+/* STRONG TYPES ADDED */
+/* ------------------ */
+
+interface SocialIconProps {
+  href: string;
+  icon: ReactNode;
+  hoverColor?: string;
+}
+
+const SocialIcon = ({ href, icon, hoverColor = "#000" }: SocialIconProps) => (
+  <Link
+    href={href}
+    className="size-[32px] flex items-center justify-center rounded-[12px] border border-[#E0E0DB] text-[#5F5F69] text-[20px] transition-all hover:text-[color:var(--c)]"
+    style={{ "--c": hoverColor } as React.CSSProperties}
+  >
+    {icon}
+  </Link>
+);
+
+
+=== D:\syntaxa-edit\components\layouts\Navbar.tsx ===
+"use client";
+
+import React, { useState } from "react";
+import Link from "next/link";
+import { AiOutlineClose, AiOutlineMenu } from "react-icons/ai";
+import Logo from "../shared/Logo";
+import Button from "../shared/Button";
+import { services } from "@/contexts/Home";
+import { DropdownMenu, DropdownItem, DropdownSeparator } from "../shared/DropdownMenu";
+import Modal from "../shared/Modal";
+import { usePathname } from "next/navigation";
+import Text from "../shared/Text";
+
+export default function Navbar() {
+  const [isOpen, setIsOpen] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const pathname = usePathname();
+  return (
+    <div className="fixed top-0 z-[99] w-full bg-[#ffffff49] border-b border-black/10">
+      <nav className="max-w-[1210px] mx-auto w-full h-[70px] md:h-[98px] px-4 flex justify-between items-center">
+        <div className="flex items-center gap-5">
+          <div className="flex items-center gap-5">
+            <Logo>
+                {pathname === "/services/online-code-editor" ? (
+                  <p className="text-[14px] md:text-[16px] text-gray-500 whitespace-nowrap">
+                    C Online Compiler
+                  </p>
+                ) : (
+                  <React.Fragment></React.Fragment>
+                )}
+            </Logo>
+          </div>
+
+          {/* Desktop Nav */}
+          <div className="hidden md:flex items-center gap-8">
+            <Link href="/#home" className="font-medium text-xl text-[#535353]">Home</Link>
+
+            <DropdownMenu trigger={<span className="font-medium text-xl text-[#535353] cursor-pointer">Services</span>}>
+              {services.map((s, i) => {
+                const Icon = s.icon;
+                return (
+                  <DropdownItem key={i} onClick={() => window.location.href = s.href}>
+                    <div className="flex items-center gap-3">
+                      <Icon className="w-6 h-6 text-gray-700" />
+                      <div className="flex flex-col">
+                        <span className="font-semibold text-sm text-black">{s.title}</span>
+                        <span className="text-xs text-gray-500">{s.description}</span>
+                      </div>
+                    </div>
+                  </DropdownItem>
+                );
+              })}
+              <DropdownSeparator />
+              <DropdownItem destructive onClick={() => alert("Critical Action")}>Critical Action</DropdownItem>
+            </DropdownMenu>
+
+            <button
+              onClick={() => setIsModalOpen(true)}
+              className="font-medium text-xl text-[#535353]"
+            >
+              Our Values
+            </button>
+          </div>
+        </div>
+
+        <div className="hidden md:flex">
+          {pathname.startsWith("/services/") ? (
+            <Button>
+              SyntaxaEdit PRO
+            </Button>
+          ) : (
+            <Button text="Book a call" />
+          )}
+        </div>
+
+        <button onClick={() => setIsOpen(!isOpen)} className="font-semibold md:hidden text-2xl">
+          {isOpen ? <AiOutlineClose /> : <AiOutlineMenu />}
+        </button>
+      </nav>
+
+      {/* Mobile Menu */}
+      {isOpen && (
+        <div className="md:hidden bg-white px-6 pb-6">
+          <div className="flex flex-col gap-6 pt-6">
+            <Link href="/#home" className="text-[18px] font-semibold border-b pb-4 border-black/10" onClick={() => setIsOpen(false)}>Home</Link>
+
+            <DropdownMenu trigger={<span className="text-[18px] font-semibold">Services ▼</span>}>
+              {services.map((s, i) => {
+                const Icon = s.icon;
+                return (
+                  <DropdownItem key={i} onClick={() => { setIsOpen(false); window.location.href = s.href }}>
+                    <div className="flex items-center gap-3">
+                      <Icon className="w-6 h-6 text-gray-700" />
+                      <div className="flex flex-col">
+                        <span className="font-semibold text-sm">{s.title}</span>
+                        <span className="text-xs text-gray-500">{s.description}</span>
+                      </div>
+                    </div>
+                  </DropdownItem>
+                );
+              })}
+            </DropdownMenu>
+
+            <button
+              onClick={() => { setIsModalOpen(true); setIsOpen(false); }}
+              className="text-[18px] font-semibold border-b pb-4 border-black/10 text-left"
+            >
+              Our Values
+            </button>
+
+            <Button text="Submit" />
+          </div>
+        </div>
+      )}
+
+      {/* Modal */}
+      <Modal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        overlayClassName="fixed inset-0 bg-black/50 flex items-center justify-center z-50"
+        modalClassName="bg-white p-6 rounded-lg max-w-md w-full relative"
+        closeBtnClassName="absolute top-2 right-2 text-xl font-bold"
+      >
+        <h2 className="text-xl font-semibold mb-2">Our Values</h2>
+        <p className="text-gray-700">
+          Here you can put your company’s values or any important information you want to display in the modal.
+        </p>
+      </Modal>
+    </div>
+  );
+}
+
+
+=== D:\syntaxa-edit\components\online-code-editor\AdBanner.tsx ===
+import React from 'react';
+import Image from 'next/image';
+
+const AdBanner = () => {
+  return (
+    <aside className="w-64 bg-blue-50 p-6 rounded-lg shadow-sm hidden lg:flex flex-col">
+      <div className="flex items-center space-x-2 mb-4">
+         <Image src="/programiz-logo.svg" alt="Programiz Logo" width={100} height={24} />
+         <span className="text-purple-600 font-bold border border-purple-400 px-2 py-0.5 rounded text-sm">PRO</span>
+      </div>
+      <h3 className="text-xl font-bold text-gray-800 mb-2">
+        Premium Courses by Programiz
+      </h3>
+      
+      <button className="w-full bg-purple-600 text-white font-semibold py-2 rounded-md hover:bg-purple-700 transition-colors mt-4">
+        Learn More
+      </button>
+
+      <div className="flex-grow flex items-end justify-center mt-8">
+        <Image 
+          src="/student-illustration.svg" 
+          alt="Student Illustration"
+          width={180}
+          height={140}
+        />
+      </div>
+    </aside>
+  );
+};
+
+export default AdBanner;
+
+=== D:\syntaxa-edit\components\online-code-editor\Editor.tsx ===
+import React from 'react';
+import { FiMaximize, FiMoon, FiShare2 } from 'react-icons/fi';
+
+const CodeLine = ({ num, children }: { num: number; children: React.ReactNode }) => (
+  <div>
+    <span className="text-right text-gray-400 pr-4 select-none w-10 inline-block">{num}</span>
+    {children}
+  </div>
+);
+
+const Editor = () => {
+  return (
+    <div className="flex flex-col bg-white rounded-lg shadow-sm overflow-hidden h-full">
+      {/* Editor Toolbar */}
+      <div className="flex justify-between items-center p-2 border-b border-gray-200 bg-gray-50">
+        <div className="px-3 py-1 bg-white border border-gray-200 rounded-t-md text-sm">
+          main.c
+        </div>
+        <div className="flex items-center space-x-2">
+          <button className="p-2 rounded-md hover:bg-gray-200 text-gray-600">
+            <FiMaximize size={16} />
+          </button>
+          <button className="p-2 rounded-md hover:bg-gray-200 text-gray-600">
+            <FiMoon size={16} />
+          </button>
+          <button className="flex items-center space-x-2 p-2 rounded-md hover:bg-gray-200 text-gray-600">
+            <FiShare2 size={16} />
+            <span className="text-sm hidden lg:inline">Share</span>
+          </button>
+          <button className="bg-blue-600 text-white px-6 py-2 rounded-md text-sm font-semibold hover:bg-blue-700">
+            Run
+          </button>
+        </div>
+      </div>
+      
+      {/* Code Area */}
+      <div className="flex-grow p-4 font-mono text-sm leading-relaxed overflow-auto">
+        <CodeLine num={1}>
+          <span className="text-green-600">{`// Online C compiler to run C program online`}</span>
+        </CodeLine>
+        <CodeLine num={2}>
+          <span className="text-purple-600">#include</span>
+          <span className="text-red-500">{` <stdio.h>`}</span>
+        </CodeLine>
+        <CodeLine num={3}>&nbsp;</CodeLine>
+        <CodeLine num={4}>
+          <span className="text-blue-600">int</span>
+          <span>{` main() {`}</span>
+        </CodeLine>
+        <div className="pl-10">
+            <CodeLine num={5}>
+              <span className="text-green-600">{`// Write C code here`}</span>
+            </CodeLine>
+            <div className="bg-gray-100 border-l-2 border-blue-500 -ml-10 pl-10">
+                 <CodeLine num={6}>
+                  <span className="text-blue-600">printf</span>
+                  <span>(</span>
+                  <span className="text-yellow-600">{`"Try programiz.pro"`}</span>
+                  <span>);</span>
+                </CodeLine>
+            </div>
+            <CodeLine num={7}>&nbsp;</CodeLine>
+            <CodeLine num={8}>
+              <span className="text-purple-600">return</span>
+              <span> 0;</span>
+            </CodeLine>
+        </div>
+        <CodeLine num={9}>
+          <span>{`}`}</span>
+        </CodeLine>
+      </div>
+    </div>
+  );
+};
+
+export default Editor;
+
+=== D:\syntaxa-edit\components\online-code-editor\Sidebar.tsx ===
+import React from 'react';
+import {
+  FaPython,
+  FaDatabase,
+  FaHtml5,
+  FaJava,
+  FaTerminal,
+  FaReact,
+} from 'react-icons/fa';
+import { SiC, SiCplusplus, SiJavascript, SiTypescript, SiGo, SiRuby } from 'react-icons/si';
+
+const languages = [
+  { name: 'Python', icon: <FaPython /> },
+  { name: 'R', icon: <FaTerminal /> }, // Placeholder for R
+  { name: 'SQL', icon: <FaDatabase /> },
+  { name: 'HTML', icon: <FaHtml5 /> },
+  { name: 'Java', icon: <FaJava /> },
+  { name: 'C', icon: <SiC />, active: true },
+  { name: 'C++', icon: <SiCplusplus /> },
+  { name: 'C#', icon: <SiC /> }, // Placeholder, can refine
+  { name: 'JavaScript', icon: <SiJavascript /> },
+  { name: 'TypeScript', icon: <SiTypescript /> },
+  { name: 'Go', icon: <SiGo /> },
+  { name: 'Ruby', icon: <SiRuby /> },
+];
+
+const Sidebar = () => {
+  return (
+    <aside className="bg-gray-100 border-r border-gray-200 p-2 hidden md:flex flex-col items-center space-y-2">
+      {languages.map((lang) => (
+        <button
+          key={lang.name}
+          title={lang.name}
+          className={`
+            w-12 h-12 flex items-center justify-center rounded-lg transition-colors
+            ${lang.active
+              ? 'bg-blue-600 text-white'
+              : 'text-gray-600 hover:bg-gray-200'
+            }
+          `}
+        >
+          <div className="text-2xl">{lang.icon}</div>
+        </button>
+      ))}
+    </aside>
+  );
+};
+
+export default Sidebar;
+
+=== D:\syntaxa-edit\components\shared\Badge.tsx ===
+import React from "react";
+import { cn } from "@/lib/utils";
+
+interface BadgeProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+    text?: string;
+    className?: string;
+    children?: React.ReactNode;
+}
+
+export default function Badge({ text, className, children, ...props }: BadgeProps) {
+    return (
+        <button
+            className={cn(
+                "bg-white rounded-2xl text-black font-medium text-[14px] flex justify-center items-center gap-1.5 px-3.5 py-2 border border-[#3D3D3D1A]",
+                className
+            )}
+            {...props}
+        >
+            {text}
+            {children}
+        </button>
+    );
+}
+
+
+=== D:\syntaxa-edit\components\shared\Button.tsx ===
+import React from "react";
+import Link from "next/link";
+import { cn } from "@/lib/utils";
+
+interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+  text?: string;
+  href?: string;
+  className?: string;
+  children?: React.ReactNode;
+  variant?: "default" | "outline" | "ghost" | "black";
+}
+
+const Button: React.FC<ButtonProps> = ({
+  text,
+  href,
+  className,
+  children,
+  variant = "default",
+  ...props
+}) => {
+  const baseClasses =
+    "flex justify-center items-center px-8 py-3 rounded-2xl inline-flex cursor-pointer transition-all duration-300 ease-in-out font-medium hover:scale-[0.98] hover:translate-y-[-3px]";
+
+  const variantClasses: Record<string, string> = {
+    default:
+      "text-white shadow-[0px_3px_0px_0px_#6E50D1,0px_5px_6px_0px_#7558FC80] active:shadow-none",
+
+    outline:
+      "text-[#7F61FB] border border-[#7F61FB] bg-transparent shadow-none hover:bg-[#7F61FB]/10 active:shadow-none",
+
+    ghost:
+      "px-0 py-0 text-[#7F61FB] bg-transparent border border-transparent hover:bg-[#7F61FB]/10 shadow-none active:shadow-none",
+
+    black:
+      "text-white bg-black shadow-[0px_3px_0px_0px_#1a1a1a,0px_5px_6px_0px_#00000080] active:shadow-none hover:bg-black",
+  };
+
+  const style =
+    variant === "default"
+      ? { background: "linear-gradient(180deg, #7F61FB 0%, #7558FC 100%)" }
+      : undefined;
+
+  const classes = cn(baseClasses, variantClasses[variant], className);
+
+  if (href) {
+    return (
+      <Link 
+        href={href} 
+        className={classes} 
+        style={style}
+      >
+        {children || text}
+      </Link>
+    );
+  }
+
+  return (
+    <button className={classes} style={style} {...props}>
+      {children || text}
+    </button>
+  );
+};
+
+export default Button;
+
+
+=== D:\syntaxa-edit\components\shared\DropdownMenu.tsx ===
+"use client";
+
+import React, { useState, useRef, useEffect } from "react";
+import { LuChevronsUpDown } from "react-icons/lu";
+import { cn } from "@/lib/utils";
+
+export function DropdownMenu({ trigger, children }: { trigger: React.ReactNode; children: React.ReactNode }) {
+  const [open, setOpen] = useState(false);
+  const ref = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const handleClick = (e: MouseEvent) => {
+      if (ref.current && !ref.current.contains(e.target as Node)) setOpen(false);
+    };
+    document.addEventListener("mousedown", handleClick);
+    return () => document.removeEventListener("mousedown", handleClick);
+  }, []);
+
+  useEffect(() => {
+    document.body.style.overflow = open ? "hidden" : "";
+  }, [open]);
+
+  return (
+    <div ref={ref} className="relative inline-block">
+      <button onClick={() => setOpen(o => !o)} className="px-3 py-2 rounded-md hover:bg-gray-200 flex items-center gap-2">
+        {trigger} <LuChevronsUpDown className="w-4 h-4 text-gray-500" />
+      </button>
+      {open && (
+        <>
+          <div className="fixed inset-0 z-40 bg-black/20" onClick={() => setOpen(false)} />
+          <div className="absolute left-0 z-50 w-56 rounded-md border bg-white shadow-lg p-1 mt-2 animate-in fade-in-0 zoom-in-95">
+            {children}
+          </div>
+        </>
+      )}
+    </div>
+  );
+}
+
+export function DropdownItem({ children, onClick, disabled, destructive }: { children: React.ReactNode; onClick?: () => void; disabled?: boolean; destructive?: boolean }) {
+  return (
+    <button
+      disabled={disabled}
+      onClick={!disabled ? onClick : undefined}
+      className={cn(
+        "w-full text-left px-3 py-2 text-sm rounded-sm select-none transition-colors",
+        disabled && "opacity-50 cursor-not-allowed",
+        !disabled && "hover:bg-gray-100",
+        destructive && "text-red-600 hover:bg-red-50"
+      )}
+    >
+      {children}
+    </button>
+  );
+}
+
+export function DropdownSeparator() {
+  return <div className="my-1 border-t" />;
+}
+
+
+=== D:\syntaxa-edit\components\shared\Heading.tsx ===
+import { cn } from "@/lib/utils";
+import React from "react";
+
+interface HeadingProps extends React.HTMLAttributes<HTMLHeadingElement> {
+    text?: string;
+    className?: string;
+    children?: React.ReactNode;
+    variant?: "default" | "medium" | "small";
+}
+
+const Heading: React.FC<HeadingProps> = ({ text, className, children, variant = "default", ...props }) => {
+    const variantClasses = {
+        default: "font-peachi text-[48px] md:text-[88px] leading-[56px] md:leading-[96px] tracking-tight",
+        medium: "font-peachi font-semibold text-3xl md:text-4xl leading-snug md:leading-relaxed tracking-tight",
+        small: "font-peachi font-semibold text-xl md:text-2xl leading-snug md:leading-relaxed tracking-tight",
+    };
+
+    return (
+        <h1 className={cn(variantClasses[variant], className)} {...props}>
+            {text}
+            {children}
+        </h1>
+    );
+};
+
+export default Heading;
+
+
+=== D:\syntaxa-edit\components\shared\Logo.tsx ===
+import Image from 'next/image'
+
+interface LogoProps {
+    children?: React.ReactNode
+}
+
+const Logo:React.FC<LogoProps> = ({children}) => {
+    return (
+        <div className="relative flex items-center gap-2 w-auto">
+            <Image
+                src="/icons/logo.png"
+                alt="logo"
+                width={34}
+                height={39}
+                className="w-[31px] h-[35px] md:w-[34px] md:h-[39px]"
+            />
+            <span className="flex flex-col text-gray-500 -ml-1 -mt-0.5">
+                <span className="font-semibold text-2xl leading-[1.05] bg-gradient-to-r from-[#0047FF] via-[#3A5BFF] to-[#8A5BFF] text-transparent bg-clip-text">
+                    yntaxa
+                </span>
+                <span className="font-semibold text-[16px] md:text-[18] leading-[0.99]">edit</span>
+            </span>
+            <span className='absolute top-full'>
+                {children}
+            </span>
+        </div>
+    )
+}
+
+export default Logo
+
+=== D:\syntaxa-edit\components\shared\Modal.tsx ===
+"use client";
+
+import React from "react";
+
+interface ModalProps {
+  children: React.ReactNode;
+  isOpen: boolean;
+  onClose: () => void;
+  overlayClassName?: string; // styles for the overlay
+  modalClassName?: string;   // styles for the modal container
+  closeBtnClassName?: string; // styles for the close button
+}
+
+export default function Modal({
+  children,
+  isOpen,
+  onClose,
+  overlayClassName,
+  modalClassName,
+  closeBtnClassName,
+}: ModalProps) {
+  if (!isOpen) return null;
+
+  return (
+    <div className={overlayClassName} onClick={onClose}>
+      <div
+        className={modalClassName}
+        onClick={(e) => e.stopPropagation()} // prevent closing when clicking modal
+      >
+        <button onClick={onClose} className={closeBtnClassName}>
+          &times;
+        </button>
+        {children}
+      </div>
+    </div>
+  );
+}
+
+
+=== D:\syntaxa-edit\components\shared\Text.tsx ===
+import { cn } from '@/lib/utils';
+import React from 'react';
+
+interface TextProps {
+  text?: string;
+  className?: string;
+  children?: React.ReactNode;
+}
+
+const Text: React.FC<TextProps> = ({ text, className, children }) => {
+  return (
+    <p
+      className={cn(
+        "font-normal text-[14px] sm:text-[16px] lg:text-[20px] leading-[1.6] text-[#3D3D3D]",
+        className
+      )}
+    >
+      {text || children}
+    </p>
+  );
+};
+
+export default Text;
+
+
+=== D:\syntaxa-edit\contexts\Home.ts ===
+import { BsFillMagnetFill } from "react-icons/bs";
+import { FaCode, FaMarkdown, FaDraftingCompass, FaGoogle, FaMicrosoft, FaAmazon, FaSpotify } from "react-icons/fa";
+
+export const services = [
+  {
+    title: "Online Code Editor",
+    description: "Write and test code in the browser with syntax highlighting.",
+    icon: FaCode,
+    href: "/services/online-code-editor",
+  },
+  {
+    title: "Markdown Editor",
+    description: "Edit, preview, and export Markdown files instantly.",
+    icon: FaMarkdown,
+    href: "/services/markdown-editor",
+  },
+  {
+    title: "WYSIWYG Page Builder",
+    description: "Drag-and-drop visual page builder for websites.",
+    icon: FaDraftingCompass,
+    href: "/services/page-builder",
+  },
+];
+
+
+export const testimonials = [
+   {
+      quote: "Switching to EchoCode cut my debugging time in half. The AI suggestions actually understand modern React patterns, which is a game-changer.",
+      author: "Sarah Chen",
+      title: "Senior Frontend Developer, TechCorp",
+   },
+   {
+      quote: "Finally, an editor that does not crash with large Unity projects. The performance is incredible. It has become my daily driver.",
+      author: "Marcus Rodriguez",
+      title: "Indie Game Developer",
+   },
+   {
+      quote: "The collaboration features are seamless. My team can now pair program effectively without screen sharing lag or configuration nightmares.",
+      author: "Emily Sato",
+      title: "Engineering Manager, Innovate Inc.",
+   },
+   {
+      quote: "The plugin ecosystem is curated perfectly. I get all the power I need without the bloat or dependency issues of other editors.",
+      author: "David Lee",
+      title: "Full-Stack Developer, StartupX",
+   }
+];
+
+export const companyLogos = [
+   { name: 'Google', Icon: FaGoogle },
+   { name: 'Microsoft', Icon: FaMicrosoft },
+   { name: 'Amazon', Icon: FaAmazon },
+   { name: 'Netflix', Icon: BsFillMagnetFill },
+   { name: 'Spotify', Icon: FaSpotify },
+];
+
+=== D:\syntaxa-edit\eslint.config.mjs ===
+import { defineConfig, globalIgnores } from "eslint/config";
+import nextVitals from "eslint-config-next/core-web-vitals";
+import nextTs from "eslint-config-next/typescript";
+
+const eslintConfig = defineConfig([
+  ...nextVitals,
+  ...nextTs,
+  // Override default ignores of eslint-config-next.
+  globalIgnores([
+    // Default ignores of eslint-config-next:
+    ".next/**",
+    "out/**",
+    "build/**",
+    "next-env.d.ts",
+  ]),
+]);
+
+export default eslintConfig;
+
+
+=== D:\syntaxa-edit\lib\utils.ts ===
+import { clsx, type ClassValue } from "clsx"
+import { twMerge } from "tailwind-merge"
+
+export function cn(...inputs: ClassValue[]) {
+  return twMerge(clsx(inputs))
+}
+
+=== D:\syntaxa-edit\list-files.js ===
+const fs = require('fs');
+const path = require('path');
+
+// Folders to ignore
+const IGNORED_FOLDERS = new Set(['node_modules', '.next', 'dist', '.git', 'out', 'public', 'ui']);
+
+// Specific files to ignore
+const IGNORED_FILES = new Set(['README.md', 'package-lock.json', 'all_files.txt']);
+
+// File extensions to ignore (e.g., image types)
+const IGNORED_EXTENSIONS = new Set([
+    '.png', '.jpg', '.jpeg', '.gif', '.bmp', '.svg', '.webp', '.ico', '.tiff', '.psd', '.json', 'mjs'
+]);
+
+// Recursive function to get all files
+function listFiles(dirPath, fileList = []) {
+    const entries = fs.readdirSync(dirPath, { withFileTypes: true });
+
+    for (const entry of entries) {
+        const fullPath = path.join(dirPath, entry.name);
+
+        if (entry.isDirectory()) {
+            if (!IGNORED_FOLDERS.has(entry.name)) {
+                listFiles(fullPath, fileList);
+            }
+        } else {
+            const ext = path.extname(entry.name).toLowerCase();
+            if (!IGNORED_FILES.has(entry.name) && !IGNORED_EXTENSIONS.has(ext)) {
+                fileList.push(fullPath);
+            }
+        }
+    }
+
+    return fileList;
+}
+
+// ✅ Target directory (current folder)
+const targetDir = path.resolve(__dirname, './');
+const outputFile = path.join(__dirname, 'all_files.txt');
+
+const files = listFiles(targetDir);
+
+// Create write stream
+const writeStream = fs.createWriteStream(outputFile, { flags: 'w' });
+
+files.forEach(file => {
+    try {
+        const content = fs.readFileSync(file, 'utf8');
+        writeStream.write(`=== ${file} ===\n`);
+        writeStream.write(content + '\n\n');
+    } catch (err) {
+        writeStream.write(`Could not read file ${file}: ${err.message}\n\n`);
+    }
+});
+
+writeStream.end(() => {
+    console.log(`✅ All file names and contents written to: ${outputFile}`);
+});
+
+
+=== D:\syntaxa-edit\next-env.d.ts ===
+/// <reference types="next" />
+/// <reference types="next/image-types/global" />
+import "./.next/dev/types/routes.d.ts";
+
+// NOTE: This file should not be edited
+// see https://nextjs.org/docs/app/api-reference/config/typescript for more information.
+
+
+=== D:\syntaxa-edit\next.config.ts ===
+import type { NextConfig } from "next";
+
+const nextConfig: NextConfig = {
+  /* config options here */
+};
+
+export default nextConfig;
+
+
+=== D:\syntaxa-edit\postcss.config.mjs ===
+const config = {
+  plugins: {
+    "@tailwindcss/postcss": {},
+  },
+};
+
+export default config;
+
+

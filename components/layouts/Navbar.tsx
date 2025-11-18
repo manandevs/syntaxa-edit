@@ -8,16 +8,28 @@ import Button from "../shared/Button";
 import { services } from "@/contexts/Home";
 import { DropdownMenu, DropdownItem, DropdownSeparator } from "../shared/DropdownMenu";
 import Modal from "../shared/Modal";
+import { usePathname } from "next/navigation";
+import Text from "../shared/Text";
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
-
+  const pathname = usePathname();
   return (
     <div className="fixed top-0 z-[99] w-full bg-[#ffffff49] border-b border-black/10">
       <nav className="max-w-[1210px] mx-auto w-full h-[70px] md:h-[98px] px-4 flex justify-between items-center">
         <div className="flex items-center gap-5">
-          <Logo />
+          <div className="flex items-center gap-5">
+            <Logo>
+                {pathname === "/services/online-code-editor" ? (
+                  <p className="text-[14px] md:text-[16px] text-gray-500 whitespace-nowrap">
+                    C Online Compiler
+                  </p>
+                ) : (
+                  <React.Fragment></React.Fragment>
+                )}
+            </Logo>
+          </div>
 
           {/* Desktop Nav */}
           <div className="hidden md:flex items-center gap-8">
@@ -51,7 +63,15 @@ export default function Navbar() {
           </div>
         </div>
 
-        <div className="hidden md:flex"><Button text="Book a call" /></div>
+        <div className="hidden md:flex">
+          {pathname.startsWith("/services/") ? (
+            <Button>
+              SyntaxaEdit PRO
+            </Button>
+          ) : (
+            <Button text="Book a call" />
+          )}
+        </div>
 
         <button onClick={() => setIsOpen(!isOpen)} className="font-semibold md:hidden text-2xl">
           {isOpen ? <AiOutlineClose /> : <AiOutlineMenu />}

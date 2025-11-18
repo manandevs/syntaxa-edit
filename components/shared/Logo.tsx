@@ -1,9 +1,12 @@
 import Image from 'next/image'
-import React from 'react'
 
-const Logo = () => {
+interface LogoProps {
+    children?: React.ReactNode
+}
+
+const Logo:React.FC<LogoProps> = ({children}) => {
     return (
-        <div className="flex items-center gap-2">
+        <div className="relative flex items-center gap-2 w-auto">
             <Image
                 src="/icons/logo.png"
                 alt="logo"
@@ -16,6 +19,9 @@ const Logo = () => {
                     yntaxa
                 </span>
                 <span className="font-semibold text-[16px] md:text-[18] leading-[0.99]">edit</span>
+            </span>
+            <span className='absolute top-full'>
+                {children}
             </span>
         </div>
     )
