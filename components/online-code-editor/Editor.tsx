@@ -1,76 +1,74 @@
-import React from 'react';
+"use client";
+
+import React from 'react'; // Removed useState and useEffect
 import { FiMaximize, FiMoon, FiShare2 } from 'react-icons/fi';
+import Editor from '@monaco-editor/react';
+import Button from '../shared/Button';
 
-const CodeLine = ({ num, children }: { num: number; children: React.ReactNode }) => (
-  <div>
-    <span className="text-right text-gray-400 pr-4 select-none w-10 inline-block">{num}</span>
-    {children}
-  </div>
-);
+// Language configuration mapping remains the same
+const languageConfig: { [key: string]: { monaco: string; boilerplate: string; fileName: string } } = {
+  python: { monaco: 'python', boilerplate: 'print("Hello, World!")', fileName: 'main.py' },
+  c: { monaco: 'c', boilerplate: '#include <stdio.h>\n\nint main() {\n   printf("Hello, World!");\n   return 0;\n}', fileName: 'main.c' },
+  javascript: { monaco: 'javascript', boilerplate: 'console.log("Hello, World!");', fileName: 'script.js' },
+};
 
-const Editor = () => {
+interface CodeEditorProps {
+  languageSlug: string;
+}
+
+const CodeEditor: React.FC<CodeEditorProps> = ({ languageSlug }) => {
+  // We no longer need the 'code' or 'editorKey' states.
+  const currentLanguage = languageConfig[languageSlug] || languageConfig.c; // Fallback to 'c'
+
+  // The useEffect hook is no longer needed.
+
   return (
-    <div className="flex flex-col bg-white rounded-lg shadow-sm overflow-hidden h-full resize-x">
+    <div className="flex flex-col bg-white rounded-lg shadow-sm overflow-hidden h-full">
       {/* Editor Toolbar */}
       <div className="flex justify-between items-center p-2 border-b border-gray-200 bg-gray-50">
-        <div className="px-3 py-1 bg-white border border-gray-200 rounded-t-md text-sm">
-          main.c
-        </div>
+        <Button className='py-1.5 bg-white border border-gray-200' variant='outline'>
+          {currentLanguage.fileName}
+        </Button>
         <div className="flex items-center space-x-2">
-          <button className="p-2 rounded-md hover:bg-gray-200 text-gray-600">
+          <Button className='py-1.5 px-1.5 hover:bg-gray-200 text-gray-600' variant='ghost'>
             <FiMaximize size={16} />
-          </button>
-          <button className="p-2 rounded-md hover:bg-gray-200 text-gray-600">
+          </Button>
+          <Button className='py-1.5 px-1.5 hover:bg-gray-200 text-gray-600' variant='ghost'>
             <FiMoon size={16} />
-          </button>
-          <button className="flex items-center space-x-2 p-2 rounded-md hover:bg-gray-200 text-gray-600">
+          </Button>
+          <Button className='py-1.5 px-1.5 hover:bg-gray-200 text-gray-600 gap-1' variant='ghost'>
             <FiShare2 size={16} />
             <span className="text-sm hidden lg:inline">Share</span>
-          </button>
-          <button className="bg-blue-600 text-white px-6 py-2 rounded-md text-sm font-semibold hover:bg-blue-700">
+          </Button>
+          <Button className='py-1.5'>
             Run
-          </button>
+          </Button>
         </div>
       </div>
-      
-      {/* Code Area */}
-      <div className="flex-grow p-4 font-mono text-sm leading-relaxed overflow-auto">
-        <CodeLine num={1}>
-          <span className="text-green-600">{`// Online C compiler to run C program online`}</span>
-        </CodeLine>
-        <CodeLine num={2}>
-          <span className="text-purple-600">#include</span>
-          <span className="text-red-500">{` <stdio.h>`}</span>
-        </CodeLine>
-        <CodeLine num={3}>&nbsp;</CodeLine>
-        <CodeLine num={4}>
-          <span className="text-blue-600">int</span>
-          <span>{` main() {`}</span>
-        </CodeLine>
-        <div className="pl-10">
-            <CodeLine num={5}>
-              <span className="text-green-600">{`// Write C code here`}</span>
-            </CodeLine>
-            <div className="bg-gray-100 border-l-2 border-blue-500 -ml-10 pl-10">
-                 <CodeLine num={6}>
-                  <span className="text-blue-600">printf</span>
-                  <span>(</span>
-                  <span className="text-yellow-600">{`"Try programiz.pro"`}</span>
-                  <span>);</span>
-                </CodeLine>
-            </div>
-            <CodeLine num={7}>&nbsp;</CodeLine>
-            <CodeLine num={8}>
-              <span className="text-purple-600">return</span>
-              <span> 0;</span>
-            </CodeLine>
-        </div>
-        <CodeLine num={9}>
-          <span>{`}`}</span>
-        </CodeLine>
+
+      {/* Monaco Editor Area */}
+      <div className="flex-grow">
+        <Editor
+          // 1. Use the languageSlug as the key.
+          key={languageSlug}
+          height="100%"
+          language={currentLanguage.monaco}
+          // 2. Use defaultValue instead of value.
+          defaultValue={currentLanguage.boilerplate}
+          // The onChange handler is now optional if you don't need to track the value in real-time.
+          options={{
+            selectOnLineNumbers: true,
+            automaticLayout: true,
+            minimap: {
+              enabled: false
+            },
+            fontSize: 14,
+            wordWrap: 'on',
+          }}
+        />
       </div>
     </div>
   );
 };
 
-export default Editor;
+export default CodeEditor;

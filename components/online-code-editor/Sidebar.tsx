@@ -1,45 +1,40 @@
 import React from 'react';
-import {
-  FaPython,
-  FaDatabase,
-  FaHtml5,
-  FaJava,
-  FaTerminal,
-} from 'react-icons/fa';
-import { SiC, SiCplusplus, SiJavascript, SiTypescript, SiGo, SiRuby } from 'react-icons/si';
+import { FaPython } from 'react-icons/fa';
+import { SiC } from 'react-icons/si';
+import Button from '../shared/Button';
+import { TbBrandJavascript, TbExchange } from 'react-icons/tb';
 
 const languages = [
-  { name: 'Python', icon: <FaPython /> },
-  { name: 'R', icon: <FaTerminal /> },
-  { name: 'SQL', icon: <FaDatabase /> },
-  { name: 'HTML', icon: <FaHtml5 /> },
-  { name: 'Java', icon: <FaJava /> },
-  { name: 'C', icon: <SiC />, active: true },
-  { name: 'C++', icon: <SiCplusplus /> },
-  { name: 'C#', icon: <SiC /> }, 
-  { name: 'JavaScript', icon: <SiJavascript /> },
-  { name: 'TypeScript', icon: <SiTypescript /> },
-  { name: 'Go', icon: <SiGo /> },
-  { name: 'Ruby', icon: <SiRuby /> },
+  { name: 'Python', slug: 'python', icon: <FaPython /> },
+  { name: 'C', slug: 'c', icon: <SiC /> },
+  { name: 'JavaScript', slug: 'javascript', icon: <TbBrandJavascript /> },
 ];
 
-const Sidebar = () => {
+interface SidebarProps {
+  activeSlug: string;
+}
+
+const Sidebar: React.FC<SidebarProps> = ({ activeSlug }) => {
   return (
     <aside className="bg-gray-100 border-r border-gray-200 p-2 hidden md:flex flex-col items-center space-y-2">
+      <Button
+        title="Exchange Compiler"
+        className="w-12 h-12 p-0"
+      >
+        <div className="text-2xl">
+          <TbExchange />
+        </div>
+      </Button>
       {languages.map((lang) => (
-        <button
-          key={lang.name}
+        <Button
+          href={`/services/online-code-editor/${lang.slug}`}
+          key={lang.slug}
           title={lang.name}
-          className={`
-            w-12 h-12 flex items-center justify-center rounded-lg transition-colors
-            ${lang.active
-              ? 'bg-blue-600 text-white'
-              : 'text-gray-600 hover:bg-gray-200'
-            }
-          `}
+          className="w-12 h-12 p-0"
+          variant={activeSlug === lang.slug ? 'default' : 'outline'}
         >
           <div className="text-2xl">{lang.icon}</div>
-        </button>
+        </Button>
       ))}
     </aside>
   );

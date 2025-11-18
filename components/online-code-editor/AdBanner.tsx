@@ -1,24 +1,26 @@
 import React from 'react';
 import Image from 'next/image';
+import Logo from '../shared/Logo';
+import Button from '../shared/Button';
+import Heading from '../shared/Heading';
 
 const AdBanner = () => {
   return (
-    <aside className="w-64 bg-blue-50 p-6 rounded-lg shadow-sm hidden lg:flex flex-col">
-      <div className="flex items-center space-x-2 mb-4">
-         <Image src="/programiz-logo.svg" alt="Programiz Logo" width={100} height={24} />
-         <span className="text-purple-600 font-bold border border-purple-400 px-2 py-0.5 rounded text-sm">PRO</span>
+    <aside className="w-64 h-full bg-blue-50 p-6 rounded-lg shadow-sm hidden lg:flex flex-col justify-center items-center">
+      <div className="flex flex-col gap-2">
+        <div className="flex items-center space-x-2 mb-4">
+          <Logo />
+          <Button variant='outline' className='px-5 py-0.5'>PRO</Button>
+        </div>
+        <Heading variant='small' className='text-gray-600'>
+          Premium Courses by Programiz
+        </Heading>
+        <Button>Learn More</Button>
       </div>
-      <h3 className="text-xl font-bold text-gray-800 mb-2">
-        Premium Courses by Programiz
-      </h3>
-      
-      <button className="w-full bg-purple-600 text-white font-semibold py-2 rounded-md hover:bg-purple-700 transition-colors mt-4">
-        Learn More
-      </button>
 
-      <div className="flex-grow flex items-end justify-center mt-8">
-        <Image 
-          src="/student-illustration.svg" 
+      <div className="h-full flex items-end justify-center mt-8">
+        <Image
+          src="/images/student-illustration.png"
           alt="Student Illustration"
           width={180}
           height={140}

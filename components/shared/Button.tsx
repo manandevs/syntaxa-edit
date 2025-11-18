@@ -19,7 +19,7 @@ const Button: React.FC<ButtonProps> = ({
   ...props
 }) => {
   const baseClasses =
-    "flex justify-center items-center px-8 py-3 rounded-2xl inline-flex cursor-pointer transition-all duration-300 ease-in-out font-medium hover:scale-[0.98] hover:translate-y-[-3px]";
+    "font-peachi flex justify-center items-center px-8 py-3 rounded-2xl inline-flex cursor-pointer transition-all duration-300 ease-in-out font-medium hover:scale-[0.98] hover:translate-y-[-3px]";
 
   const variantClasses: Record<string, string> = {
     default:
