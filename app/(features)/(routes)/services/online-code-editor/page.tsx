@@ -2,29 +2,33 @@ import React from 'react';
 import Link from 'next/link';
 import Heading from '@/components/shared/Heading';
 import Text from '@/components/shared/Text';
-import {
-  FaPython,
-  FaDatabase,
-  FaHtml5,
-  FaJava,
-  FaTerminal,
-} from 'react-icons/fa';
-import { SiC, SiCplusplus, SiJavascript, SiTypescript, SiGo, SiRuby } from 'react-icons/si';
+import { FaPython } from 'react-icons/fa';
+import { SiC } from 'react-icons/si';
+import { TbBrandJavascript } from 'react-icons/tb';
 
-// Define the list of available compilers/editors
+// The compilers array now includes specific colors for hover effects
 const compilers = [
-  { name: 'Python', slug: 'python', icon: FaPython },
-  { name: 'R', slug: 'r', icon: FaTerminal },
-  { name: 'SQL', slug: 'sql', icon: FaDatabase },
-  { name: 'HTML', slug: 'html', icon: FaHtml5 },
-  { name: 'Java', slug: 'java', icon: FaJava },
-  { name: 'C', slug: 'c', icon: SiC },
-  { name: 'C++', slug: 'cpp', icon: SiCplusplus },
-  { name: 'C#', slug: 'csharp', icon: SiC }, // Using SiC as a placeholder
-  { name: 'JavaScript', slug: 'javascript', icon: SiJavascript },
-  { name: 'TypeScript', slug: 'typescript', icon: SiTypescript },
-  { name: 'Go', slug: 'go', icon: SiGo },
-  { name: 'Ruby', slug: 'ruby', icon: SiRuby },
+    {
+        name: 'Python',
+        slug: 'python',
+        icon: FaPython,
+        color: '#3776AB', // Python's official blue
+        lightColor: 'rgba(55, 118, 171, 0.1)', // A light, transparent version
+    },
+    {
+        name: 'C',
+        slug: 'c',
+        icon: SiC,
+        color: '#A8B9CC', // A classic color for C
+        lightColor: 'rgba(168, 185, 204, 0.1)',
+    },
+    {
+        name: 'JavaScript',
+        slug: 'javascript',
+        icon: TbBrandJavascript,
+        color: '#F7DF1E', // JavaScript's iconic yellow
+        lightColor: 'rgba(247, 223, 30, 0.1)',
+    },
 ];
 
 export default function OnlineCodeEditorPage() {
@@ -40,22 +44,53 @@ export default function OnlineCodeEditorPage() {
                     </Text>
                 </div>
 
-                <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6">
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 justify-items-center">
                     {compilers.map((compiler) => {
                         const Icon = compiler.icon;
                         return (
-                            <Link 
-                                href={`/services/online-code-editor/${compiler.slug}`} 
+                            <div
                                 key={compiler.slug}
                                 className="group"
                             >
-                                <div className="flex flex-col items-center justify-center p-6 bg-gray-50 rounded-xl border border-gray-200 shadow-sm transition-all duration-300 hover:border-blue-500 hover:shadow-lg hover:-translate-y-1">
-                                    <Icon className="w-12 h-12 text-gray-700 transition-colors group-hover:text-blue-600" />
-                                    <span className="mt-4 font-semibold text-gray-800 text-center">
-                                        {compiler.name}
-                                    </span>
+                                <div
+                                    className="overflow-hidden relative w-56 h-64 bg-gray-100 rounded-2xl flex flex-col justify-end items-center gap-2 pb-8 transition-colors duration-300 group-hover:bg-[var(--lang-light-color)]"
+                                    style={{
+                                        '--lang-color': compiler.color,
+                                        '--lang-light-color': compiler.lightColor,
+                                    } as React.CSSProperties}
+                                >
+                                    <Icon className="absolute top-8 text-7xl text-gray-300 transition-colors duration-300 group-hover:text-[var(--lang-color)]" />
+
+                                    <svg className="absolute opacity-30 -rotate-12 -bottom-12 -right-12 w-40 h-40 stroke-gray-300 transition-colors duration-300 group-hover:stroke-[var(--lang-color)]" height="100" preserveAspectRatio="xMidYMid meet" viewBox="0 0 100 100" width="100" x="0" xmlns="http://www.w3.org/2000/svg" y="0">
+                                        <path d="M65.8,46.1V30.3a15.8,15.8,0,1,0-31.6,0V46.1M22.4,38.2H77.6l4,47.3H18.4Z" fill="none" strokeLinecap="round" strokeLinejoin="round" strokeWidth="8"></path>
+                                    </svg>
+
+                                    <div className="flex flex-col items-center z-10">
+                                        <Heading variant='small' className='text-gray-800'>{compiler.name}</Heading>
+                                        <Text
+                                            variant='small'
+                                            className="text-gray-500 inline-block after:absolute after:content-[''] after:ml-2 after:top-1/2 after:bg-gray-200 after:w-12 after:h-0.5 after:transition-colors after:duration-300 group-hover:after:bg-[var(--lang-color)] before:absolute before:content-[''] before:-ml-14 before:top-1/2 before:bg-gray-200 before:w-12 before:h-0.5 before:transition-colors before:duration-300 group-hover:before:bg-[var(--lang-color)]"
+                                        >
+                                            Online Editor
+                                        </Text>
+                                    </div>
+
+                                    <div className='flex flex-col gap-0 justify-center items-center mt-4'>
+                                        <Link
+                                            href={`/services/online-code-editor/${compiler.slug}/info`}
+                                            className="cursor-pointer z-10 px-4 py-2 underline text-gray-600 font-semibold group-hover:text-[var(--lang-color)] rounded-md transition-all"
+                                        >
+                                            Docs
+                                        </Link>
+                                        <Link
+                                            href={`/services/online-code-editor/${compiler.slug}`}
+                                            className="cursor-pointer z-10 px-4 py-2 bg-gray-300 text-gray-800 font-semibold group-hover:bg-[var(--lang-color)] group-hover:text-white rounded-md transition-all"
+                                        >
+                                            Start Coding
+                                        </Link>
+                                    </div>
                                 </div>
-                            </Link>
+                            </div>
                         );
                     })}
                 </div>

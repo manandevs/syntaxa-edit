@@ -9,9 +9,9 @@ import Tooltip from '../shared/Tooltip';
 import { useSidebar } from '../contexts/SidebarContext';
 
 const languages = [
-  { name: 'Python', slug: 'python', icon: <FaPython /> },
+  // { name: 'Python', slug: 'python', icon: <FaPython /> },
   { name: 'C', slug: 'c', icon: <SiC /> },
-  { name: 'JavaScript', slug: 'javascript', icon: <TbBrandJavascript /> },
+  // { name: 'JavaScript', slug: 'javascript', icon: <TbBrandJavascript /> },
 ];
 
 interface SidebarProps {

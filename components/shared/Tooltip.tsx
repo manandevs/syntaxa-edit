@@ -37,12 +37,12 @@ const Tooltip: React.FC<TooltipProps> = ({
   };
 
   return (
-    <div className={cn("relative inline-block group z-50", className)}>
+    <div className={cn("relative inline-block group z-[999]", className)}>
       {children}
       <div
         role="tooltip"
         className={cn(
-          "absolute z-10 inline-block opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300",
+          "absolute z-[999] inline-block opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300",
           placementClasses[placement],
           tooltipClassName
         )}
@@ -50,7 +50,7 @@ const Tooltip: React.FC<TooltipProps> = ({
         <Text className='bg-gray-900 font-peachi px-2.5 py-0.5 rounded-lg text-white' variant='small'>{content}</Text>
         <div
           className={cn(
-            "absolute w-1.5 h-1.5 bg-gray-900 rotate-45",
+            "absolute w-1.5 h-1.5 bg-gray-900 rotate-45 z-[999]",
             arrowPlacementClasses[placement]
           )}
         />

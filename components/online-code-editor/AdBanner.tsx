@@ -6,7 +6,7 @@ import Heading from '../shared/Heading';
 
 const AdBanner = () => {
   return (
-    <aside className="w-64 h-full bg-blue-50 p-6 rounded-lg shadow-sm hidden lg:flex flex-col justify-center items-center">
+    <aside className="w-64 h-full bg-blue-50 p-6 shadow-sm hidden lg:flex flex-col justify-center items-center">
       <div className="flex flex-col gap-2">
         <div className="flex items-center space-x-2 mb-4">
           <Logo />
