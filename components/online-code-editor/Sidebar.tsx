@@ -5,19 +5,18 @@ import {
   FaHtml5,
   FaJava,
   FaTerminal,
-  FaReact,
 } from 'react-icons/fa';
 import { SiC, SiCplusplus, SiJavascript, SiTypescript, SiGo, SiRuby } from 'react-icons/si';
 
 const languages = [
   { name: 'Python', icon: <FaPython /> },
-  { name: 'R', icon: <FaTerminal /> }, // Placeholder for R
+  { name: 'R', icon: <FaTerminal /> },
   { name: 'SQL', icon: <FaDatabase /> },
   { name: 'HTML', icon: <FaHtml5 /> },
   { name: 'Java', icon: <FaJava /> },
   { name: 'C', icon: <SiC />, active: true },
   { name: 'C++', icon: <SiCplusplus /> },
-  { name: 'C#', icon: <SiC /> }, // Placeholder, can refine
+  { name: 'C#', icon: <SiC /> }, 
   { name: 'JavaScript', icon: <SiJavascript /> },
   { name: 'TypeScript', icon: <SiTypescript /> },
   { name: 'Go', icon: <SiGo /> },

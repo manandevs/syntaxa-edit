@@ -10,7 +10,7 @@ const CodeLine = ({ num, children }: { num: number; children: React.ReactNode })
 
 const Editor = () => {
   return (
-    <div className="flex flex-col bg-white rounded-lg shadow-sm overflow-hidden h-full">
+    <div className="flex flex-col bg-white rounded-lg shadow-sm overflow-hidden h-full resize-x">
       {/* Editor Toolbar */}
       <div className="flex justify-between items-center p-2 border-b border-gray-200 bg-gray-50">
         <div className="px-3 py-1 bg-white border border-gray-200 rounded-t-md text-sm">

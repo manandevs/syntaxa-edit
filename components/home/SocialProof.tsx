@@ -6,7 +6,7 @@ import 'swiper/css/navigation';
 import { FaQuoteLeft } from 'react-icons/fa';
 import { GiRamProfile } from 'react-icons/gi';
 import { FiChevronLeft, FiChevronRight } from 'react-icons/fi';
-import { testimonials, companyLogos } from '@/contexts/Home';
+import { testimonials, companyLogos } from '@/data/Home';
 import Heading from '../shared/Heading';
 import Text from '../shared/Text';
 import { Navigation } from 'swiper/modules';

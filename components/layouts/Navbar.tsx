@@ -5,29 +5,29 @@ import Link from "next/link";
 import { AiOutlineClose, AiOutlineMenu } from "react-icons/ai";
 import Logo from "../shared/Logo";
 import Button from "../shared/Button";
-import { services } from "@/contexts/Home";
+import { services } from "@/data/Home";
 import { DropdownMenu, DropdownItem, DropdownSeparator } from "../shared/DropdownMenu";
 import Modal from "../shared/Modal";
-import { usePathname } from "next/navigation";
-import Text from "../shared/Text";
+import { useParams, usePathname } from "next/navigation";
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const pathname = usePathname();
+  const params = useParams();
+  const slug = params?.slug;
+
   return (
-    <div className="fixed top-0 z-[99] w-full bg-[#ffffff49] border-b border-black/10">
+    <div className="fixed top-0 z-[99] w-full bg-[#ffffff49] border-b backdrop-blur-sm border-black/10">
       <nav className="max-w-[1210px] mx-auto w-full h-[70px] md:h-[98px] px-4 flex justify-between items-center">
         <div className="flex items-center gap-5">
           <div className="flex items-center gap-5">
             <Logo>
-                {pathname === "/services/online-code-editor" ? (
-                  <p className="text-[14px] md:text-[16px] text-gray-500 whitespace-nowrap">
-                    C Online Compiler
-                  </p>
-                ) : (
-                  <React.Fragment></React.Fragment>
-                )}
+              {pathname.startsWith("/services/online-code-editor/") && slug && (
+                <p className="text-[14px] md:text-[16px] text-gray-500 whitespace-nowrap capitalize">
+                  {slug} Online Compiler
+                </p>
+              )}
             </Logo>
           </div>
 
