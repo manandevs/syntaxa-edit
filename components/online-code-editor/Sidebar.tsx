@@ -1,8 +1,12 @@
+"use client"; 
+
 import React from 'react';
 import { FaPython } from 'react-icons/fa';
 import { SiC } from 'react-icons/si';
 import Button from '../shared/Button';
 import { TbBrandJavascript, TbExchange } from 'react-icons/tb';
+import Tooltip from '../shared/Tooltip';
+import { useSidebar } from '../contexts/SidebarContext';
 
 const languages = [
   { name: 'Python', slug: 'python', icon: <FaPython /> },
@@ -15,26 +19,35 @@ interface SidebarProps {
 }
 
 const Sidebar: React.FC<SidebarProps> = ({ activeSlug }) => {
+  const { isSidebarOpen } = useSidebar();
+
+  if (!isSidebarOpen) {
+    return null;
+  }
+
   return (
-    <aside className="bg-gray-100 border-r border-gray-200 p-2 hidden md:flex flex-col items-center space-y-2">
-      <Button
-        title="Exchange Compiler"
-        className="w-12 h-12 p-0"
-      >
-        <div className="text-2xl">
-          <TbExchange />
-        </div>
-      </Button>
-      {languages.map((lang) => (
+    <aside className="bg-gray-100 border-r border-gray-200 p-2 hidden md:flex flex-col items-center space-y-2 animate-in fade-in-0 duration-300">
+      <Tooltip content="Switch Language" placement="right">
         <Button
-          href={`/services/online-code-editor/${lang.slug}`}
-          key={lang.slug}
-          title={lang.name}
+          title="Exchange Compiler"
           className="w-12 h-12 p-0"
-          variant={activeSlug === lang.slug ? 'default' : 'outline'}
         >
-          <div className="text-2xl">{lang.icon}</div>
+          <div className="text-2xl">
+            <TbExchange />
+          </div>
         </Button>
+      </Tooltip>
+      {languages.map((lang) => (
+        <Tooltip key={lang.slug} content={lang.name} placement="right">
+          <Button
+            href={`/services/online-code-editor/${lang.slug}`}
+            title={lang.name}
+            className="w-12 h-12 p-0"
+            variant={activeSlug === lang.slug ? 'default' : 'outline'}
+          >
+            <div className="text-2xl">{lang.icon}</div>
+          </Button>
+        </Tooltip>
       ))}
     </aside>
   );
