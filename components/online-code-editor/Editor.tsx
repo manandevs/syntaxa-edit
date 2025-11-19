@@ -9,6 +9,7 @@ import Tooltip from '../shared/Tooltip';
 import { useSidebar } from '../contexts/SidebarContext';
 import { useFullScreen } from '../contexts/FullScreenContext';
 import { AiFillLock } from 'react-icons/ai';
+import Disable from '../shared/Disable';
 
 const languageConfig: { [key: string]: { monaco: string; boilerplate: string; fileName: string } } = {
   // python: { monaco: 'python', boilerplate: 'print("Hello, World!")', fileName: 'main.py' },
@@ -56,10 +57,11 @@ const CodeEditor: React.FC<CodeEditorProps> = ({ languageSlug }) => {
             </Button>
           </Tooltip>
           <Tooltip content="Toggle Theme" placement="bottom">
-            <Button className='p-2 hover:bg-gray-200 text-gray-600 relative cursor-not-allowed' variant='ghost'>
-              <AiFillLock className="text-gray-400 absolute -top-1 -right-1 z-[9999]" />
-              <FiMoon size={16} />
-            </Button>
+            <Disable>
+              <Button className='p-2 hover:bg-gray-200 text-gray-600' variant='ghost'>
+                <FiMoon size={16} />
+              </Button>
+            </Disable>
           </Tooltip>
           <Tooltip content="Share Code" placement="bottom">
             <Button className='py-1.5 px-2 hover:bg-gray-200 text-gray-600 gap-1 relative cursor-not-allowed' variant='ghost'>
