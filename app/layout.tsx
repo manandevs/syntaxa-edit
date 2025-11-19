@@ -6,6 +6,7 @@ import { cn } from "@/lib/utils";
 import Navbar from "@/components/layouts/Navbar";
 import Footer from "@/components/layouts/Footer";
 import { FullScreenProvider } from "@/components/contexts/FullScreenContext";
+import { ModalProvider } from "@/components/contexts/ModalContext";
 
 const poppins = Poppins({
   weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
@@ -23,9 +24,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="en">
       <body className={cn("antialiased", poppins.variable)}>
         <FullScreenProvider>
-          <Navbar />
-          {children}
-          <Footer />
+          <ModalProvider>
+            <Navbar />
+            {children}
+            <Footer />
+          </ModalProvider>
         </FullScreenProvider>
       </body>
     </html>

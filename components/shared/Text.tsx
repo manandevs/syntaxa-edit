@@ -24,7 +24,7 @@ const Text: React.FC<TextProps> = ({
   return (
     <p
       className={cn(
-        "font-normal leading-[1.6] text-[#3D3D3D]",
+        "font-peachi leading-[1.6] text-[#3D3D3D]",
         variantClasses[variant],
         className
       )}

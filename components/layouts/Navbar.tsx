@@ -2,20 +2,32 @@
 
 import React, { useState } from "react";
 import Link from "next/link";
-import { AiOutlineClose, AiOutlineMenu } from "react-icons/ai";
+import { AiOutlineClose, AiOutlineMenu, AiFillLock } from "react-icons/ai"; // Import AiFillLock
 import Logo from "../shared/Logo";
 import Button from "../shared/Button";
 import { services } from "@/data/Home";
 import { DropdownMenu, DropdownItem, DropdownSeparator } from "../shared/DropdownMenu";
 import Modal from "../shared/Modal";
 import { useParams, usePathname } from "next/navigation";
+import { useModal } from "../contexts/ModalContext";
+import Heading from "../shared/Heading";
+import Text from "../shared/Text";
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const { openModal } = useModal();
   const pathname = usePathname();
   const params = useParams();
   const slug = params?.slug;
+
+  const ourValuesContent = (
+    <div className="">
+      <Heading className="text-gray-600">Our Values</Heading>
+      <Text className="text-gray-500">
+        We believe in speed, simplicity, and empowering developers. Our mission is to create tools that feel like an extension of your own mind, allowing you to build amazing software without friction.
+      </Text>
+    </div>
+  );
 
   return (
     <div className="fixed top-0 z-[99] w-full bg-[#ffffff49] border-b backdrop-blur-sm border-black/10">
@@ -33,14 +45,19 @@ export default function Navbar() {
 
           {/* Desktop Nav */}
           <div className="hidden md:flex items-center gap-8">
-            <Link href="/#home" className="font-medium text-xl text-[#535353]">Home</Link>
+            <Link href="/" className="font-medium text-xl text-[#535353]">Home</Link>
 
             <DropdownMenu trigger={<span className="font-medium text-xl text-[#535353] cursor-pointer">Services</span>}>
               {services.map((s, i) => {
                 const Icon = s.icon;
                 return (
-                  <DropdownItem key={i} onClick={() => window.location.href = s.href}>
-                    <div className="flex items-center gap-3">
+                  <DropdownItem
+                    key={i}
+                    onClick={s.allow ? () => (window.location.href = s.href) : undefined}
+                    disabled={!s.allow}
+                  >
+                    <div className="relative flex items-center gap-3">
+                      {!s.allow && <AiFillLock className="text-gray-400 absolute -top-1 -right-1 z-10" />}
                       <Icon className="w-6 h-6 text-gray-700" />
                       <div className="flex flex-col">
                         <span className="font-semibold text-sm text-black">{s.title}</span>
@@ -54,12 +71,13 @@ export default function Navbar() {
               <DropdownItem destructive onClick={() => alert("Critical Action")}>Critical Action</DropdownItem>
             </DropdownMenu>
 
-            <button
-              onClick={() => setIsModalOpen(true)}
-              className="font-medium text-xl text-[#535353]"
+            <Button
+              variant="ghost"
+              onClick={() => openModal(ourValuesContent)}
+              className="font-medium text-lg text-gray-600 hover:text-black"
             >
               Our Values
-            </button>
+            </Button>
           </div>
         </div>
 
@@ -82,14 +100,19 @@ export default function Navbar() {
       {isOpen && (
         <div className="md:hidden bg-white px-6 pb-6">
           <div className="flex flex-col gap-6 pt-6">
-            <Link href="/#home" className="text-[18px] font-semibold border-b pb-4 border-black/10" onClick={() => setIsOpen(false)}>Home</Link>
+            <Link href="/" className="text-[18px] font-semibold border-b pb-4 border-black/10" onClick={() => setIsOpen(false)}>Home</Link>
 
             <DropdownMenu trigger={<span className="text-[18px] font-semibold">Services ▼</span>}>
               {services.map((s, i) => {
                 const Icon = s.icon;
                 return (
-                  <DropdownItem key={i} onClick={() => { setIsOpen(false); window.location.href = s.href }}>
-                    <div className="flex items-center gap-3">
+                  <DropdownItem
+                    key={i}
+                    onClick={s.allow ? () => { setIsOpen(false); window.location.href = s.href; } : undefined}
+                    disabled={!s.allow}
+                  >
+                    <div className="relative flex items-center gap-3">
+                      {!s.allow && <AiFillLock className="text-gray-400 absolute -top-1 -right-1 z-10" />}
                       <Icon className="w-6 h-6 text-gray-700" />
                       <div className="flex flex-col">
                         <span className="font-semibold text-sm">{s.title}</span>
@@ -101,31 +124,18 @@ export default function Navbar() {
               })}
             </DropdownMenu>
 
-            <button
-              onClick={() => { setIsModalOpen(true); setIsOpen(false); }}
-              className="text-[18px] font-semibold border-b pb-4 border-black/10 text-left"
+            <Button
+              variant="ghost"
+              onClick={() => { openModal(ourValuesContent); setIsOpen(false); }}
+              className="text-lg font-semibold border-b pb-4 border-black/10 text-left"
             >
               Our Values
-            </button>
+            </Button>
 
             <Button text="Submit" />
           </div>
         </div>
       )}
-
-      {/* Modal */}
-      <Modal
-        isOpen={isModalOpen}
-        onClose={() => setIsModalOpen(false)}
-        overlayClassName="fixed inset-0 bg-black/50 flex items-center justify-center z-50"
-        modalClassName="bg-white p-6 rounded-lg max-w-md w-full relative"
-        closeBtnClassName="absolute top-2 right-2 text-xl font-bold"
-      >
-        <h2 className="text-xl font-semibold mb-2">Our Values</h2>
-        <p className="text-gray-700">
-          Here you can put your company’s values or any important information you want to display in the modal.
-        </p>
-      </Modal>
     </div>
   );
 }

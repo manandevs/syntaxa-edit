@@ -2,24 +2,27 @@ import { BsFillMagnetFill } from "react-icons/bs";
 import { FaCode, FaMarkdown, FaDraftingCompass, FaGoogle, FaMicrosoft, FaAmazon, FaSpotify } from "react-icons/fa";
 
 export const services = [
-  {
-    title: "Online Code Editor",
-    description: "Write and test code in the browser with syntax highlighting.",
-    icon: FaCode,
-    href: "/services/online-code-editor",
-  },
-  {
-    title: "Markdown Editor",
-    description: "Edit, preview, and export Markdown files instantly.",
-    icon: FaMarkdown,
-    href: "/services/markdown-editor",
-  },
-  {
-    title: "WYSIWYG Page Builder",
-    description: "Drag-and-drop visual page builder for websites.",
-    icon: FaDraftingCompass,
-    href: "/services/page-builder",
-  },
+   {
+      title: "Online Code Editor",
+      description: "Write and test code in the browser with syntax highlighting.",
+      icon: FaCode,
+      href: "/services/online-code-editor",
+      allow: true,
+   },
+   {
+      title: "Markdown Editor",
+      description: "Edit, preview, and export Markdown files instantly.",
+      icon: FaMarkdown,
+      href: "/services/markdown-editor",
+      allow: false,
+   },
+   {
+      title: "WYSIWYG Page Builder",
+      description: "Drag-and-drop visual page builder for websites.",
+      icon: FaDraftingCompass,
+      href: "/services/page-builder",
+      allow: false,
+   },
 ];
 
 
