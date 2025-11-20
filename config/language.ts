@@ -5,5 +5,5 @@ import { TbBrandJavascript } from "react-icons/tb";
 export const languages = [
   // { name: 'Python', slug: 'python', icon: FaPython },
   { name: 'C', slug: 'c', icon: SiC },
-  // { name: 'JavaScript', slug: 'javascript', icon: TbBrandJavascript },
+  { name: 'JavaScript', slug: 'javascript', icon: TbBrandJavascript },
 ];

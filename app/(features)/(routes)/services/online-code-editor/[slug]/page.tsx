@@ -9,12 +9,39 @@ import CodeEditor from '@/components/online-code-editor/Editor';
 import Sidebar from '@/components/online-code-editor/Sidebar';
 import Button from '@/components/shared/Button';
 import Text from '@/components/shared/Text';
+import SyntaxHighlighter from 'react-syntax-highlighter';
+import { vs } from 'react-syntax-highlighter/dist/esm/styles/hljs';
+import Tooltip from '@/components/shared/Tooltip';
 
 const Page = () => {
     const params = useParams();
     const slug = params?.slug as string;
 
     const [output, setOutput] = useState("");
+    const [isSuccess, setIsSuccess] = useState(false);
+    const [isError, setIsError] = useState(false);
+
+    // Detect success or error automatically
+    const handleSetOutput = (value: string) => {
+        setOutput(value);
+
+        const errorKeywords = ["error", "Error", "failed", "exception", "Exception", "undefined", "syntax"];
+
+        if (value && value.trim() !== "") {
+            const hasError = errorKeywords.some(keyword => value.includes(keyword));
+
+            if (hasError) {
+                setIsError(true);
+                setIsSuccess(false);
+            } else {
+                setIsSuccess(true);
+                setIsError(false);
+            }
+        } else {
+            setIsSuccess(false);
+            setIsError(false);
+        }
+    };
 
     return (
         <SidebarProvider>
@@ -28,7 +55,7 @@ const Page = () => {
                                 <ResizablePanelGroup direction="horizontal" className="flex-1 rounded-lg">
 
                                     <ResizablePanel defaultSize={60} minSize={30} className="flex flex-col">
-                                        <CodeEditor languageSlug={slug} setOutput={setOutput} />
+                                        <CodeEditor languageSlug={slug} setOutput={handleSetOutput} />
                                     </ResizablePanel>
 
                                     <ResizableHandle className="w-2 bg-gray-100 hover:bg-blue-500 transition-colors cursor-col-resize" />
@@ -38,13 +65,50 @@ const Page = () => {
                                         <div className="p-2 border-b flex justify-between items-center bg-gray-50">
                                             <Text variant="small" className="font-semibold text-gray-700">Output</Text>
 
-                                            <Button className="py-1 text-sm" variant="outline" onClick={() => setOutput("")}>
-                                                Clear
-                                            </Button>
+                                            <Tooltip content="Clear Execution" placement='bottom'>
+                                                <Button className="py-1 text-sm" variant="outline" onClick={() => handleSetOutput("")}>
+                                                    Clear
+                                                </Button>
+                                            </Tooltip>
                                         </div>
 
-                                        <div className="p-4 font-mono text-sm text-gray-700 flex-grow overflow-auto whitespace-pre-wrap">
-                                            {output}
+                                        {/* SUCCESS MESSAGE */}
+                                        {isSuccess && (
+                                            <div className="mx-4 mt-2 p-2 bg-green-100 border border-green-300 text-green-700 rounded-md text-sm animate-fadeIn">
+                                                ✅ Code executed successfully
+                                            </div>
+                                        )}
+
+                                        {/* ERROR MESSAGE */}
+                                        {isError && (
+                                            <div className="mx-4 mt-2 p-2 bg-red-100 border border-red-300 text-red-700 rounded-md text-sm animate-fadeIn">
+                                                ❌ An error occurred while executing the code
+                                            </div>
+                                        )}
+
+                                        <div className="p-4 h-full font-mono text-sm text-gray-700 flex-grow overflow-x-scroll whitespace-pre-wrap">
+                                            {output ? (
+                                                <SyntaxHighlighter
+                                                    language="bash"
+                                                    style={vs}
+                                                    customStyle={{
+                                                        margin: 0,
+                                                        padding: '1rem',
+                                                        fontSize: '0.875rem',
+                                                        lineHeight: '1.5',
+                                                        backgroundColor: 'transparent',
+                                                        fontFamily: 'monospace',
+                                                        height: '100%',
+                                                    }}
+                                                    wrapLongLines={true}
+                                                >
+                                                    {output}
+                                                </SyntaxHighlighter>
+                                            ) : (
+                                                <div className="p-4 text-gray-400 text-sm font-mono italic select-none">
+                                                    Run your code to see the output here...
+                                                </div>
+                                            )}
                                         </div>
                                     </ResizablePanel>
 

@@ -19,6 +19,7 @@ interface CodeEditorProps {
 }
 
 const CodeEditor: React.FC<CodeEditorProps> = ({ languageSlug, setOutput }) => {
+  // Fallback to 'c' if slug not found, though it should exist if configured correctly
   const cfg = languageConfig[languageSlug] || languageConfig.c;
   const editorRef = useRef<any>(null);
 
@@ -28,7 +29,11 @@ const CodeEditor: React.FC<CodeEditorProps> = ({ languageSlug, setOutput }) => {
   const runCode = async () => {
     const code = editorRef.current?.getValue() || "";
 
-    const res = await fetch("/api/sandbox/execute/c", {
+    // ---------------------------------------------------------
+    // UPDATED: Dynamic URL based on languageSlug
+    // This will now call /api/sandbox/execute/javascript or /c
+    // ---------------------------------------------------------
+    const res = await fetch(`/api/sandbox/execute/${languageSlug}`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ code }),
@@ -40,14 +45,12 @@ const CodeEditor: React.FC<CodeEditorProps> = ({ languageSlug, setOutput }) => {
   };
 
   return (
-    // Removed global overflow-hidden to allow tooltips to overflow
     <div className="flex flex-col bg-white rounded-lg shadow-sm h-full">
 
-      {/* Added rounded-t-lg */}
       <div className="flex justify-between items-center p-2 border-b bg-gray-50 rounded-t-lg">
 
         <div className="flex items-center gap-2">
-          <Tooltip content="Toggle Sidebar">
+          <Tooltip content="Toggle Sidebar" placement='right'>
             <Button variant="ghost" onClick={toggleSidebar} className="p-2">
               <BsWindowSidebar />
             </Button>
@@ -60,14 +63,14 @@ const CodeEditor: React.FC<CodeEditorProps> = ({ languageSlug, setOutput }) => {
 
         <div className="flex items-center gap-2">
 
-          <Tooltip content={handle.active ? "Exit Fullscreen" : "Enter Fullscreen"}>
+          <Tooltip placement='bottom' content={handle.active ? "Exit Fullscreen" : "Enter Fullscreen"}>
             <Button variant="ghost" onClick={handle.active ? handle.exit : handle.enter} className="p-2">
               {handle.active ? <FiMinimize /> : <FiMaximize />}
             </Button>
           </Tooltip>
 
           <Disable>
-            <Tooltip content="Toggle Theme">
+            <Tooltip placement='bottom' content="Toggle Theme">
               <Button className="p-2" variant="ghost">
                 <FiMoon />
               </Button>
@@ -79,26 +82,25 @@ const CodeEditor: React.FC<CodeEditorProps> = ({ languageSlug, setOutput }) => {
             <FiShare2 />
           </Button>
 
-          <Tooltip content="Run Code">
+          <Tooltip placement='bottom' content="Run Code">
             <Button className="py-1.5 px-4" onClick={runCode}>Run</Button>
           </Tooltip>
 
         </div>
       </div>
 
-      {/* Added rounded-b-lg and overflow-hidden here for the editor area specifically */}
-      <div className="flex-grow overflow-hidden rounded-b-lg">
+      <div className="flex-grow rounded-b-lg">
         <Editor
-            height="100%"
-            defaultValue={cfg.boilerplate}
-            language={cfg.monaco}
-            onMount={(editor) => (editorRef.current = editor)}
-            options={{
+          height="100%"
+          defaultValue={cfg.boilerplate}
+          language={cfg.monaco}
+          onMount={(editor) => (editorRef.current = editor)}
+          options={{
             automaticLayout: true,
             minimap: { enabled: false },
             fontSize: 14,
             wordWrap: "on",
-            }}
+          }}
         />
       </div>
     </div>

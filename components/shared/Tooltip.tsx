@@ -37,7 +37,7 @@ const Tooltip: React.FC<TooltipProps> = ({
   };
 
   return (
-    <div className={cn("relative inline-block group z-[100]", className)}> {/* Changed z-50 to z-[100] */}
+    <div className={cn("relative inline-block group z-50", className)}>
       {children}
       <div
         role="tooltip"

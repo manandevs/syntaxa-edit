@@ -17,11 +17,11 @@ export const compilers = [
         color: '#A8B9CC',
         lightColor: 'rgba(168, 185, 204, 0.1)',
     },
-    // {
-    //     name: 'JavaScript',
-    //     slug: 'javascript',
-    //     icon: TbBrandJavascript,
-    //     color: '#F7DF1E', 
-    //     lightColor: 'rgba(247, 223, 30, 0.1)',
-    // },
+    {
+        name: 'JavaScript',
+        slug: 'javascript',
+        icon: TbBrandJavascript,
+        color: '#F7DF1E',
+        lightColor: 'rgba(247, 223, 30, 0.1)',
+    },
 ];
