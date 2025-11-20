@@ -1,97 +1,101 @@
 "use client";
 
-import React from 'react';
-import { FiMaximize, FiMoon, FiShare2, FiMinimize } from 'react-icons/fi'; // Import FiMinimize
+import React, { useRef } from 'react';
 import Editor from '@monaco-editor/react';
 import Button from '../shared/Button';
-import { BsWindowSidebar } from 'react-icons/bs';
 import Tooltip from '../shared/Tooltip';
-import { useSidebar } from '../contexts/SidebarContext';
-import { useFullScreen } from '../contexts/FullScreenContext';
+import { BsWindowSidebar } from 'react-icons/bs';
+import { FiMaximize, FiMoon, FiShare2, FiMinimize } from 'react-icons/fi';
 import { AiFillLock } from 'react-icons/ai';
 import Disable from '../shared/Disable';
+import { useSidebar } from '../contexts/SidebarContext';
+import { useFullScreen } from '../contexts/FullScreenContext';
+import { languageConfig } from '@/config/LanguageConfig';
 
-const languageConfig: { [key: string]: { monaco: string; boilerplate: string; fileName: string } } = {
-  // python: { monaco: 'python', boilerplate: 'print("Hello, World!")', fileName: 'main.py' },
-  c: { monaco: 'c', boilerplate: '#include <stdio.h>\n\nint main() {\n   printf("Hello, World!");\n   return 0;\n}', fileName: 'main.c' },
-  // javascript: { monaco: 'javascript', boilerplate: 'console.log("Hello, World!");', fileName: 'script.js' },
-};
 
 interface CodeEditorProps {
   languageSlug: string;
+  setOutput: (value: string) => void;
 }
 
-const CodeEditor: React.FC<CodeEditorProps> = ({ languageSlug }) => {
-  const currentLanguage = languageConfig[languageSlug] || languageConfig.c;
+const CodeEditor: React.FC<CodeEditorProps> = ({ languageSlug, setOutput }) => {
+  const cfg = languageConfig[languageSlug] || languageConfig.c;
+  const editorRef = useRef<any>(null);
+
   const { toggleSidebar } = useSidebar();
   const { handle } = useFullScreen();
 
+  const runCode = async () => {
+    const code = editorRef.current?.getValue() || "";
+
+    const res = await fetch("/api/sandbox/execute/c", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ code }),
+    });
+
+    const data = await res.json();
+
+    setOutput(data.output || data.stderr || "No output");
+  };
+
   return (
     <div className="flex flex-col bg-white rounded-lg shadow-sm overflow-hidden h-full">
-      <div className="flex justify-between items-center p-2 border-b border-gray-200 bg-gray-50">
-        <div className="flex items-center">
-          <Tooltip content="Toggle Sidebar" placement="right">
-            <Button
-              variant='ghost'
-              onClick={toggleSidebar}
-              className='py-1.5 px-2 hover:bg-gray-200 text-gray-600 gap-1'
-            >
+
+      <div className="flex justify-between items-center p-2 border-b bg-gray-50">
+
+        <div className="flex items-center gap-2">
+          <Tooltip content="Toggle Sidebar">
+            <Button variant="ghost" onClick={toggleSidebar} className="p-2">
               <BsWindowSidebar />
             </Button>
           </Tooltip>
-          <Button className='py-1.5 bg-white border border-gray-200 cursor-default' variant='outline'>
-            {currentLanguage.fileName}
+
+          <Button variant="outline" className="py-1.5 border bg-white cursor-default">
+            {cfg.fileName}
           </Button>
         </div>
-        <div className="flex items-center space-x-2">
-          {/* Update the fullscreen button to be a toggle */}
-          <Tooltip content={handle.active ? "Exit Fullscreen" : "Enter Fullscreen"} placement="bottom">
-            <Button
-              className='p-2 hover:bg-gray-200 text-gray-600'
-              variant='ghost'
-              // Conditionally call enter() or exit() based on the active state
-              onClick={handle.active ? handle.exit : handle.enter}
-            >
-              {/* Conditionally render the icon */}
-              {handle.active ? <FiMinimize size={16} /> : <FiMaximize size={16} />}
+
+        <div className="flex items-center gap-2">
+
+          <Tooltip content={handle.active ? "Exit Fullscreen" : "Enter Fullscreen"}>
+            <Button variant="ghost" onClick={handle.active ? handle.exit : handle.enter} className="p-2">
+              {handle.active ? <FiMinimize /> : <FiMaximize />}
             </Button>
           </Tooltip>
-          <Tooltip content="Toggle Theme" placement="bottom">
-            <Disable>
-              <Button className='p-2 hover:bg-gray-200 text-gray-600' variant='ghost'>
-                <FiMoon size={16} />
+
+          <Disable>
+            <Tooltip content="Toggle Theme">
+              <Button className="p-2" variant="ghost">
+                <FiMoon />
               </Button>
-            </Disable>
+            </Tooltip>
+          </Disable>
+
+          <Button className="p-2 relative cursor-not-allowed" variant="ghost">
+            <AiFillLock className="absolute -top-1 -right-1" />
+            <FiShare2 />
+          </Button>
+
+          <Tooltip content="Run Code">
+            <Button className="py-1.5 px-4" onClick={runCode}>Run</Button>
           </Tooltip>
-          <Tooltip content="Share Code" placement="bottom">
-            <Button className='py-1.5 px-2 hover:bg-gray-200 text-gray-600 gap-1 relative cursor-not-allowed' variant='ghost'>
-              <AiFillLock className="text-gray-400 absolute -top-1 -right-1 z-[9999]" />
-              <FiShare2 size={16} />
-              <span className="text-sm hidden lg:inline">Share</span>
-            </Button>
-          </Tooltip>
-          <Tooltip content="Run Code" placement="bottom">
-            <Button className='py-1.5'>
-              Run
-            </Button>
-          </Tooltip>
+
         </div>
       </div>
-      <div className="flex-grow">
-        <Editor
-          key={languageSlug}
-          height="100%"
-          language={currentLanguage.monaco}
-          defaultValue={currentLanguage.boilerplate}
-          options={{
-            selectOnLineNumbers: true,
-            automaticLayout: true,
-            minimap: { enabled: false },
-            fontSize: 14,
-            wordWrap: 'on',
-          }}
-        />
-      </div>
+
+      <Editor
+        height="100%"
+        defaultValue={cfg.boilerplate}
+        language={cfg.monaco}
+        onMount={(editor) => (editorRef.current = editor)}
+        options={{
+          automaticLayout: true,
+          minimap: { enabled: false },
+          fontSize: 14,
+          wordWrap: "on",
+        }}
+      />
     </div>
   );
 };

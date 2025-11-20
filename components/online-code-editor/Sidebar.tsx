@@ -7,12 +7,7 @@ import Button from '../shared/Button';
 import { TbBrandJavascript, TbExchange } from 'react-icons/tb';
 import Tooltip from '../shared/Tooltip';
 import { useSidebar } from '../contexts/SidebarContext';
-
-const languages = [
-  // { name: 'Python', slug: 'python', icon: <FaPython /> },
-  { name: 'C', slug: 'c', icon: <SiC /> },
-  // { name: 'JavaScript', slug: 'javascript', icon: <TbBrandJavascript /> },
-];
+import { languages } from '@/config/language';
 
 interface SidebarProps {
   activeSlug: string;
@@ -45,7 +40,7 @@ const Sidebar: React.FC<SidebarProps> = ({ activeSlug }) => {
             className="w-12 h-12 p-0"
             variant={activeSlug === lang.slug ? 'default' : 'outline'}
           >
-            <div className="text-2xl">{lang.icon}</div>
+            <div className="text-2xl">{React.createElement(lang.icon)}</div>
           </Button>
         </Tooltip>
       ))}
