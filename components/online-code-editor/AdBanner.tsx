@@ -3,6 +3,7 @@ import Image from 'next/image';
 import Logo from '../shared/Logo';
 import Button from '../shared/Button';
 import Heading from '../shared/Heading';
+import Disable from '../shared/Disable';
 
 const AdBanner = () => {
   return (
@@ -10,12 +11,16 @@ const AdBanner = () => {
       <div className="flex flex-col gap-2">
         <div className="flex items-center space-x-2 mb-4">
           <Logo />
-          <Button variant='outline' className='px-5 py-0.5'>PRO</Button>
+          <Disable>
+            <Button variant='outline' className='px-5 py-0.5'>PRO</Button>
+          </Disable>
         </div>
         <Heading variant='small' className='text-gray-600'>
           Premium Courses by Programiz
         </Heading>
-        <Button>Learn More</Button>
+        <Disable>
+          <Button className='w-full'>Learn More</Button>
+        </Disable>
       </div>
 
       <div className="h-full flex items-end justify-center mt-8">

@@ -2,40 +2,14 @@ import React from 'react';
 import Link from 'next/link';
 import Heading from '@/components/shared/Heading';
 import Text from '@/components/shared/Text';
-import { FaPython } from 'react-icons/fa';
-import { SiC } from 'react-icons/si';
-import { TbBrandJavascript } from 'react-icons/tb';
-
-const compilers = [
-    // {
-    //     name: 'Python',
-    //     slug: 'python',
-    //     icon: FaPython,
-    //     color: '#3776AB', // Python's official blue
-    //     lightColor: 'rgba(55, 118, 171, 0.1)', // A light, transparent version
-    // },
-    {
-        name: 'C',
-        slug: 'c',
-        icon: SiC,
-        color: '#A8B9CC', // A classic color for C
-        lightColor: 'rgba(168, 185, 204, 0.1)',
-    },
-    // {
-    //     name: 'JavaScript',
-    //     slug: 'javascript',
-    //     icon: TbBrandJavascript,
-    //     color: '#F7DF1E', // JavaScript's iconic yellow
-    //     lightColor: 'rgba(247, 223, 30, 0.1)',
-    // },
-];
+import { compilers } from '@/data/Compilers';
 
 export default function OnlineCodeEditorPage() {
     return (
         <section className="relative w-full h-auto flex items-center bg-white pt-[70px] md:pt-[98px] min-h-screen">
             <div className="max-w-7xl mx-auto px-5 py-16 w-full z-10">
                 <div className="text-center mb-12">
-                    <Heading className="text-black" variant="medium">
+                    <Heading className="text-black">
                         Choose Your Compiler
                     </Heading>
                     <Text className="max-w-2xl mx-auto">

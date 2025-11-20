@@ -6,11 +6,10 @@ import { AiOutlineClose, AiOutlineMenu } from "react-icons/ai";
 import Logo from "../shared/Logo";
 import Button from "../shared/Button";
 import { services } from "@/data/Home";
+import { ourValuesContent } from "@/data/Values"; // Import shared content
 import { DropdownMenu, DropdownItem, DropdownSeparator } from "../shared/DropdownMenu";
 import { useParams, usePathname } from "next/navigation";
 import { useModal } from "../contexts/ModalContext";
-import Heading from "../shared/Heading";
-import Text from "../shared/Text";
 import Disable from "../shared/Disable";
 
 export default function Navbar() {
@@ -19,17 +18,6 @@ export default function Navbar() {
   const pathname = usePathname();
   const params = useParams();
   const slug = params?.slug;
-
-  const ourValuesContent = (
-    <div>
-      <Heading className="text-gray-600">Our Values</Heading>
-      <Text className="text-gray-500">
-        We believe in speed, simplicity, and empowering developers. Our mission is
-        to create tools that feel like an extension of your own mind, allowing you
-        to build amazing software without friction.
-      </Text>
-    </div>
-  );
 
   return (
     <div className="fixed top-0 z-[99] w-full bg-[#ffffff49] border-b backdrop-blur-sm border-black/10">
@@ -47,13 +35,13 @@ export default function Navbar() {
 
           {/* Desktop Nav */}
           <div className="hidden md:flex items-center gap-8">
-            <Link href="/" className="font-medium text-xl text-[#535353]">
+            <Link href="/" className="font-medium text-xl text-[#535353] hover:text-black transition-colors">
               Home
             </Link>
 
             {/* SERVICES DROPDOWN */}
             <DropdownMenu
-              trigger={<span className="font-medium text-xl text-[#535353] cursor-pointer">Services</span>}
+              trigger={<span className="font-medium text-xl text-[#535353] cursor-pointer hover:text-black transition-colors">Services</span>}
             >
               {services.map((s, i) => {
                 const Icon = s.icon;

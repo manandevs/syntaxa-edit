@@ -1,0 +1,1 @@
+export const footerNav = ["Home", "Services", "Our Values", "Contact us"];

@@ -40,9 +40,11 @@ const CodeEditor: React.FC<CodeEditorProps> = ({ languageSlug, setOutput }) => {
   };
 
   return (
-    <div className="flex flex-col bg-white rounded-lg shadow-sm overflow-hidden h-full">
+    // Removed global overflow-hidden to allow tooltips to overflow
+    <div className="flex flex-col bg-white rounded-lg shadow-sm h-full">
 
-      <div className="flex justify-between items-center p-2 border-b bg-gray-50">
+      {/* Added rounded-t-lg */}
+      <div className="flex justify-between items-center p-2 border-b bg-gray-50 rounded-t-lg">
 
         <div className="flex items-center gap-2">
           <Tooltip content="Toggle Sidebar">
@@ -84,18 +86,21 @@ const CodeEditor: React.FC<CodeEditorProps> = ({ languageSlug, setOutput }) => {
         </div>
       </div>
 
-      <Editor
-        height="100%"
-        defaultValue={cfg.boilerplate}
-        language={cfg.monaco}
-        onMount={(editor) => (editorRef.current = editor)}
-        options={{
-          automaticLayout: true,
-          minimap: { enabled: false },
-          fontSize: 14,
-          wordWrap: "on",
-        }}
-      />
+      {/* Added rounded-b-lg and overflow-hidden here for the editor area specifically */}
+      <div className="flex-grow overflow-hidden rounded-b-lg">
+        <Editor
+            height="100%"
+            defaultValue={cfg.boilerplate}
+            language={cfg.monaco}
+            onMount={(editor) => (editorRef.current = editor)}
+            options={{
+            automaticLayout: true,
+            minimap: { enabled: false },
+            fontSize: 14,
+            wordWrap: "on",
+            }}
+        />
+      </div>
     </div>
   );
 };

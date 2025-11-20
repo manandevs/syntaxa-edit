@@ -11,7 +11,7 @@ const Disable: React.FC<DisableProps> = ({ children }) => {
     return (
         <div className="relative opacity-60 select-none cursor-not-allowed">
             {/* Block all pointer events */}
-            <div className="pointer-events-none">
+            <div className="pointer-events-none w-full">
                 {children}
             </div>
 

@@ -10,7 +10,7 @@ interface HeadingProps extends React.HTMLAttributes<HTMLHeadingElement> {
 
 const Heading: React.FC<HeadingProps> = ({ text, className, children, variant = "default", ...props }) => {
     const variantClasses = {
-        default: "font-peachi text-[48px] md:text-[88px] leading-[56px] md:leading-[96px] tracking-tight",
+        default: "font-peachi font-bold text-[48px] md:text-[88px] leading-[56px] md:leading-[96px] tracking-tight",
         medium: "font-peachi font-semibold text-3xl md:text-4xl leading-snug md:leading-relaxed tracking-tight",
         small: "font-peachi font-semibold text-xl md:text-2xl leading-snug md:leading-relaxed tracking-tight",
     };

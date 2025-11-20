@@ -2,32 +2,8 @@
 
 import { useState, useEffect, useRef } from "react";
 import { FiZap, FiAlertCircle } from "react-icons/fi";
-import { SiReact, SiTailwindcss, SiExpress, SiGraphql, SiPrisma } from "react-icons/si";
-import { FaNode, FaNodeJs } from "react-icons/fa";
-import { TbBrandTypescript } from "react-icons/tb";
-import { RiNextjsFill } from "react-icons/ri";
 import Text from "../shared/Text";
-
-const languages = [
-  { icon: FaNodeJs, label: "JS", color: "text-yellow-400" },
-  { icon: TbBrandTypescript, label: "TS", color: "text-blue-500" },
-  { icon: SiReact, label: "React", color: "text-blue-400" },
-  { icon: RiNextjsFill, label: "Next.js", color: "text-gray-800" },
-  { icon: SiTailwindcss, label: "Tailwind", color: "text-teal-400" },
-  { icon: FaNode, label: "Node.js", color: "text-green-600" },
-  { icon: SiExpress, label: "Express", color: "text-gray-700" },
-  { icon: SiGraphql, label: "GraphQL", color: "text-pink-500" },
-  { icon: SiPrisma, label: "Prisma", color: "text-blue-500" },
-];
-
-const codeLines = [
-  'const Welcome = () => {',
-  '  return <h1 className="title">Hello, World!</h1>;',
-  '};'
-];
-
-const codeWithError = '  return <h1 class="title">Hello, World!</h1>;';
-const correctCode = '  return <h1 className="title">Hello, World!</h1>;';
+import { codeLines, codeWithError, correctCode, mockupLanguages } from "@/data/Mockup"; // Import from data
 
 const AnimatedEditorMockup = () => {
   const [theme, setTheme] = useState<'dark' | 'light'>('dark');
@@ -184,7 +160,7 @@ const AnimatedEditorMockup = () => {
 
       {/* Language Icons Panel */}
       <div className="w-full max-w-2xl grid grid-cols-5 gap-3 p-3 border rounded-lg bg-gray-50 justify-center">
-        {languages.map(({ icon: Icon, label, color }) => (
+        {mockupLanguages.map(({ icon: Icon, label, color }) => (
           <div
             key={label}
             className="flex flex-col items-center justify-center w-full h-full p-1 aspect-square bg-white rounded-md shadow hover:scale-105 transition-transform truncate"
