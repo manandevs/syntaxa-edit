@@ -7,6 +7,7 @@ import Navbar from "@/components/layouts/Navbar";
 import Footer from "@/components/layouts/Footer";
 import { FullScreenProvider } from "@/components/contexts/FullScreenContext";
 import { ModalProvider } from "@/components/contexts/ModalContext";
+import { ThemeProvider } from "@/components/contexts/ThemeContext";
 
 const poppins = Poppins({
   weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
@@ -33,8 +34,9 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en">
-        <body className={cn("antialiased", poppins.variable)}>
+    <html lang="en" suppressHydrationWarning>
+      <body className={cn("antialiased bg-white dark:bg-[#09090b] text-black dark:text-gray-100 transition-colors duration-300", poppins.variable)}>
+        <ThemeProvider defaultTheme="system" storageKey="syntaxa-theme">
           <FullScreenProvider>
             <ModalProvider>
               <Navbar />
@@ -42,7 +44,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               <Footer />
             </ModalProvider>
           </FullScreenProvider>
-        </body>
+        </ThemeProvider>
+      </body>
     </html>
   );
 }
