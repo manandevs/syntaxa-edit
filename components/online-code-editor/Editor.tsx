@@ -12,6 +12,10 @@ import { useSidebar } from '../contexts/SidebarContext';
 import { useFullScreen } from '../contexts/FullScreenContext';
 import { languageConfig } from '@/config/LanguageConfig';
 
+// Fix: Define a minimal interface for what we need from the editor instance
+interface MonacoEditorInstance {
+  getValue: () => string;
+}
 
 interface CodeEditorProps {
   languageSlug: string;
@@ -19,9 +23,9 @@ interface CodeEditorProps {
 }
 
 const CodeEditor: React.FC<CodeEditorProps> = ({ languageSlug, setOutput }) => {
-  // Fallback to 'c' if slug not found, though it should exist if configured correctly
   const cfg = languageConfig[languageSlug] || languageConfig.c;
-  const editorRef = useRef<any>(null);
+  // Fix: Apply the interface to the ref
+  const editorRef = useRef<MonacoEditorInstance | null>(null);
 
   const { toggleSidebar } = useSidebar();
   const { handle } = useFullScreen();
@@ -29,10 +33,6 @@ const CodeEditor: React.FC<CodeEditorProps> = ({ languageSlug, setOutput }) => {
   const runCode = async () => {
     const code = editorRef.current?.getValue() || "";
 
-    // ---------------------------------------------------------
-    // UPDATED: Dynamic URL based on languageSlug
-    // This will now call /api/sandbox/execute/javascript or /c
-    // ---------------------------------------------------------
     const res = await fetch(`/api/sandbox/execute/${languageSlug}`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -94,7 +94,8 @@ const CodeEditor: React.FC<CodeEditorProps> = ({ languageSlug, setOutput }) => {
           height="100%"
           defaultValue={cfg.boilerplate}
           language={cfg.monaco}
-          onMount={(editor) => (editorRef.current = editor)}
+          // Fix: Cast or assign the editor instance
+          onMount={(editor) => (editorRef.current = editor as unknown as MonacoEditorInstance)}
           options={{
             automaticLayout: true,
             minimap: { enabled: false },

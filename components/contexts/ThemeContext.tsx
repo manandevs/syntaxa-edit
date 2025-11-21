@@ -25,46 +25,34 @@ export function ThemeProvider({
   defaultTheme?: Theme;
   storageKey?: string;
 }) {
-  const [theme, setTheme] = useState<Theme>(defaultTheme);
-  const [mounted, setMounted] = useState(false);
+  // ❗ Lazy initialization (NO effect needed)
+  const [theme, setTheme] = useState<Theme>(() => {
+    if (typeof window === "undefined") return defaultTheme;
+    return (localStorage.getItem(storageKey) as Theme) || defaultTheme;
+  });
 
+  // Apply theme to DOM
   useEffect(() => {
-    setMounted(true);
-    const savedTheme = localStorage.getItem(storageKey) as Theme;
-    if (savedTheme) {
-      setTheme(savedTheme);
-    }
-  }, [storageKey]);
-
-  useEffect(() => {
-    const root = window.document.documentElement;
+    const root = document.documentElement;
     root.classList.remove("light", "dark");
 
     if (theme === "system") {
-      const systemTheme = window.matchMedia("(prefers-color-scheme: dark)")
-        .matches
+      const systemTheme = window.matchMedia("(prefers-color-scheme: dark)").matches
         ? "dark"
         : "light";
-
       root.classList.add(systemTheme);
-      return;
+    } else {
+      root.classList.add(theme);
     }
-
-    root.classList.add(theme);
   }, [theme]);
 
   const value = {
     theme,
-    setTheme: (theme: Theme) => {
-      localStorage.setItem(storageKey, theme);
-      setTheme(theme);
+    setTheme: (t: Theme) => {
+      localStorage.setItem(storageKey, t);
+      setTheme(t);
     },
   };
-
-  // Prevent hydration mismatch
-  if (!mounted) {
-    return <>{children}</>;
-  }
 
   return (
     <ThemeProviderContext.Provider value={value}>
@@ -74,8 +62,8 @@ export function ThemeProvider({
 }
 
 export const useTheme = () => {
-  const context = useContext(ThemeProviderContext);
-  if (context === undefined)
+  const ctx = useContext(ThemeProviderContext);
+  if (!ctx)
     throw new Error("useTheme must be used within a ThemeProvider");
-  return context;
+  return ctx;
 };

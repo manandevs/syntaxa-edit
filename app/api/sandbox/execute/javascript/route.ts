@@ -10,35 +10,31 @@ export async function POST(req: Request) {
     }
 
     // 1. Create a buffer to capture console.log output
-    let logs: string[] = [];
+    const logs: string[] = [];
 
-    // 2. Define the sandbox environment (what variables/functions the code can access)
+    // 2. Define the sandbox environment
     const sandbox = {
       console: {
-        log: (...args: any[]) => {
-          // Convert arguments to strings and push to logs array
+        log: (...args: unknown[]) => {
           logs.push(args.map(arg => 
             typeof arg === 'object' ? JSON.stringify(arg, null, 2) : String(arg)
           ).join(" "));
         },
-        error: (...args: any[]) => {
+        error: (...args: unknown[]) => {
           logs.push("Error: " + args.map(arg => String(arg)).join(" "));
         },
-        warn: (...args: any[]) => {
+        warn: (...args: unknown[]) => {
           logs.push("Warning: " + args.map(arg => String(arg)).join(" "));
         }
       },
-      // You can expose other safe globals here if needed
-      // e.g. setTimeout, setInterval (though these require async handling)
     };
 
     // 3. Create the context
     const context = vm.createContext(sandbox);
 
     // 4. Execute the code
-    // We set a timeout to prevent infinite loops from freezing your server
     vm.runInContext(code, context, {
-      timeout: 2000, // 2 seconds timeout
+      timeout: 2000, 
       displayErrors: true,
     });
 
@@ -48,11 +44,11 @@ export async function POST(req: Request) {
       stderr: "",
     });
 
-  } catch (err: any) {
-    // Catch runtime errors (syntax errors, throw errors, or timeout)
+  } catch (err: unknown) {
+    const errorMessage = err instanceof Error ? err.message : "Runtime Error";
     return NextResponse.json({
       output: "",
-      stderr: err.message || "Runtime Error",
+      stderr: errorMessage,
     });
   }
 }

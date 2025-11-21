@@ -1,4 +1,4 @@
-import { FaPython } from 'react-icons/fa';
+// import { FaPython } from 'react-icons/fa';
 import { SiC } from 'react-icons/si';
 import { TbBrandJavascript } from 'react-icons/tb';
 
