@@ -7,7 +7,7 @@ import Button from "../shared/Button";
 import Logo from "../shared/Logo";
 import { ReactNode } from "react";
 import { services } from "@/data/Home";
-import { ourValuesContent } from "@/data/Values";
+import ValuesModal from "../shared/ValuesModal";
 import { useModal } from "../contexts/ModalContext";
 import Disable from "../shared/Disable";
 import Text from "../shared/Text";
@@ -15,12 +15,17 @@ import Text from "../shared/Text";
 export default function Footer() {
   const { openModal } = useModal();
 
+  // SAME function as NAVBAR
+  const handleOpenValues = () => {
+    openModal(<ValuesModal />);
+  };
+
   return (
     <footer className="w-full mx-auto px-5">
       <div className="max-w-[1210px] mx-auto w-full py-12">
         <div className="flex flex-col lg:flex-row justify-between gap-10">
 
-          {/* LEFT SIDE: Newsletter */}
+          {/* LEFT SIDE */}
           <div className="max-w-[450px] w-full">
             <Logo />
             <Heading
@@ -38,10 +43,10 @@ export default function Footer() {
             </div>
           </div>
 
-          {/* RIGHT SIDE: Links with Descriptions */}
+          {/* RIGHT SIDE */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-10 gap-y-8 content-start">
 
-            {/* 1. Home */}
+            {/* HOME */}
             <div className="flex flex-col gap-1 group">
               <Link
                 href="/"
@@ -54,7 +59,7 @@ export default function Footer() {
               </Text>
             </div>
 
-            {/* 2. Dynamic Services */}
+            {/* SERVICES */}
             {services.map((service, i) => (
               <div key={i} className="flex flex-col gap-1 group">
                 {service.allow ? (
@@ -71,17 +76,16 @@ export default function Footer() {
                     </span>
                   </Disable>
                 )}
-
                 <Text variant="small" className="text-gray-400 group-hover:text-gray-500 transition-colors leading-snug">
                   {service.description}
                 </Text>
               </div>
             ))}
 
-            {/* 3. Our Values */}
+            {/* ✔ SAME BEHAVIOR AS NAVBAR */}
             <div className="flex flex-col gap-1 group">
               <button
-                onClick={() => openModal(ourValuesContent)}
+                onClick={handleOpenValues}
                 className="text-[#535353] font-medium text-xl hover:text-white transition-colors text-left"
               >
                 Our Values
@@ -91,7 +95,7 @@ export default function Footer() {
               </Text>
             </div>
 
-            {/* 4. Contact Us */}
+            {/* CONTACT */}
             <div className="flex flex-col gap-1 group">
               <Link
                 href="/contact"

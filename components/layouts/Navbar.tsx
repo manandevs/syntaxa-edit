@@ -6,7 +6,7 @@ import { AiOutlineClose, AiOutlineMenu } from "react-icons/ai";
 import Logo from "../shared/Logo";
 import Button from "../shared/Button";
 import { services } from "@/data/Home";
-import { ourValuesContent } from "@/data/Values"; // Import shared content
+import ValuesModal from "../shared/ValuesModal"; // Import the component
 import { DropdownMenu, DropdownItem, DropdownSeparator } from "../shared/DropdownMenu";
 import { useParams, usePathname } from "next/navigation";
 import { useModal } from "../contexts/ModalContext";
@@ -18,6 +18,11 @@ export default function Navbar() {
   const pathname = usePathname();
   const params = useParams();
   const slug = params?.slug;
+
+  // Function to handle opening the modal with the ValuesModal component
+  const handleOpenValues = () => {
+    openModal(<ValuesModal />);
+  };
 
   return (
     <div className="fixed top-0 z-[99] w-full bg-[#ffffff49] border-b backdrop-blur-sm border-black/10">
@@ -90,7 +95,7 @@ export default function Navbar() {
 
             <Button
               variant="ghost"
-              onClick={() => openModal(ourValuesContent)}
+              onClick={handleOpenValues} // Updated handler
               className="font-medium text-lg text-gray-600 hover:text-black"
             >
               Our Values
@@ -171,7 +176,7 @@ export default function Navbar() {
 
             <Button
               variant="ghost"
-              onClick={() => { openModal(ourValuesContent); setIsOpen(false); }}
+              onClick={() => { handleOpenValues(); setIsOpen(false); }} // Updated handler
               className="text-lg font-semibold border-b pb-4 border-black/10 text-left"
             >
               Our Values

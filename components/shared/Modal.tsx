@@ -25,7 +25,7 @@ export default function Modal({
     <div className={overlayClassName} onClick={onClose}>
       <div
         className={modalClassName}
-        onClick={(e) => e.stopPropagation()} // prevent closing when clicking modal
+        onClick={(e) => e.stopPropagation()} 
       >
         <button onClick={onClose} className={closeBtnClassName}>
           &times;
